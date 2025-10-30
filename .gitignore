@@ -1,0 +1,26 @@
+# OS/IDE
+.DS_Store
+Thumbs.db
+*.log
+error_log
+
+# CodeIgniter caches y logs (mantén los archivos placeholder)
+application/cache/
+!application/cache/index.html
+!application/cache/.htaccess
+application/logs/
+!application/logs/index.html
+
+# Composer (si decides usar vendors locales)
+vendor/
+!composer.json
+!composer.lock
+
+# Node (si en el futuro agregas build tooling)
+node_modules/
+
+# Entornos/archivos temporales
+.env
+.env.*
+*.tmp
+*.temp

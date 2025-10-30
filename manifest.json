@@ -1,0 +1,18 @@
+{
+  "short_name": "utma Test JLVM",
+  "name": "Examen de utma Ing. Vargas",
+  "icons": [
+    {
+      "src": "/assets/images/android-icon-48x48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/assets/images/android-icon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone"
+}

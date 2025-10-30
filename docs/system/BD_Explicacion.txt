@@ -1,0 +1,104 @@
+Base de Datos (schema_bootstrap.sql) — Nomenclatura, Propósito y Relaciones
+
+Convenciones de nombres
+- cat_ = Cat (catálogos)
+- pro_ = Sis (proceso/operación)
+- rel_ = Rel (relaciones M:N o de orden)
+- Bit (bitácora) = no presente en este schema
+
+Tablas y tipo (breve propósito)
+- cat_estatus (Cat): estados estándar del sistema (AC, IN, EL, CA).
+- cat_perfiles (Cat): roles/perfiles de usuario.
+- cat_modulos (Cat): módulos del panel (agrupan secciones).
+- cat_secciones (Cat): secciones/pantallas del sistema (m*_s*).
+- cat_permisos (Cat): permisos por sección (ej. Acceso).
+- rel_perfilespermisos (Rel): puente M:N entre perfiles y permisos.
+- cat_rutas (Cat): rutas de transporte (código, nombre, color, sentido).
+- cat_paradas (Cat): paradas con geolocalización.
+- rel_rutasparadas (Rel): asociación ruta–parada con orden secuencial.
+- cat_formasruta (Cat): polyline/formas geométricas de rutas para mapa.
+- pro_servicios (Sis): calendarios/vigencias de operación.
+- pro_viajes (Sis): viajes por ruta y servicio (operación diaria).
+- pro_tiemposparada (Sis): horarios por parada en cada viaje (stop_times).
+- cat_eventos (Cat): catálogo de eventos del sistema.
+
+Justificación de la normalización
+- Catálogos (cat_): evitan duplicidad y centralizan cambios (3NF).
+- Proceso (pro_): separan datos operativos de parámetros/catálogos.
+- Relaciones (rel_): modelan M:N y orden sin repetir información.
+- FKs con ON DELETE/UPDATE CASCADE: coherencia y sin registros huérfanos.
+- tCodEstatus uniforme: simplifica filtros por estado en todo el sistema.
+
+Llaves (PK) y claves foráneas (FK)
+- cat_estatus: PK tCodEstatus.
+- cat_perfiles: PK eCodPerfil; FK tCodEstatus → cat_estatus.tCodEstatus.
+- cat_modulos: PK eCodModulo.
+- cat_secciones: PK eCodSeccion; FK eCodModulo → cat_modulos.eCodModulo.
+- cat_permisos: PK eCodPermiso; FK eCodSeccion → cat_secciones.eCodSeccion.
+- rel_perfilespermisos: PK eCodPerfilPermiso; FK eCodPerfil → cat_perfiles.eCodPerfil; FK eCodPermiso → cat_permisos.eCodPermiso.
+- cat_rutas: PK eCodRuta; FK tCodEstatus → cat_estatus.tCodEstatus.
+- cat_paradas: PK eCodParada; FK tCodEstatus → cat_estatus.tCodEstatus.
+- rel_rutasparadas: PK eCodRutaParada; FK eCodRuta → cat_rutas.eCodRuta; FK eCodParada → cat_paradas.eCodParada.
+- cat_formasruta: PK eCodFormaRuta; FK eCodRuta → cat_rutas.eCodRuta; FK tCodEstatus → cat_estatus.tCodEstatus.
+- pro_servicios: PK eCodServicio; FK tCodEstatus → cat_estatus.tCodEstatus.
+- pro_viajes: PK eCodViaje; FK eCodRuta → cat_rutas.eCodRuta; FK eCodServicio → pro_servicios.eCodServicio; FK tCodEstatus → cat_estatus.tCodEstatus.
+- pro_tiemposparada: PK eCodTiempoParada; FK eCodViaje → pro_viajes.eCodViaje; FK eCodParada → cat_paradas.eCodParada; FK tCodEstatus → cat_estatus.tCodEstatus.
+- cat_eventos: PK eCodEvento; FK tCodEstatus → cat_estatus.tCodEstatus.
+
+Ejemplos de consultas (JOINs) con alias
+1) INNER JOIN viajes–ruta–servicio
+SELECT v.eCodViaje, v.tNombre AS viaje, r.tNombre AS ruta, s.tNombre AS servicio
+FROM pro_viajes AS v
+INNER JOIN cat_rutas AS r ON r.eCodRuta = v.eCodRuta
+INNER JOIN pro_servicios AS s ON s.eCodServicio = v.eCodServicio
+WHERE r.tCodEstatus = 'AC' AND v.tCodEstatus = 'AC';
+
+2) LEFT JOIN rutas con forma (polyline opcional)
+SELECT r.tNombre AS ruta, fr.tPolyline
+FROM cat_rutas AS r
+LEFT JOIN cat_formasruta AS fr ON fr.eCodRuta = r.eCodRuta AND fr.tCodEstatus = 'AC'
+WHERE r.tCodEstatus = 'AC';
+
+3) INNER JOIN tiempos por parada de un viaje
+SELECT tp.eOrden, p.tNombre AS parada, tp.fhHoraLlegada, tp.fhHoraSalida
+FROM pro_tiemposparada AS tp
+INNER JOIN cat_paradas AS p ON p.eCodParada = tp.eCodParada
+INNER JOIN pro_viajes AS v ON v.eCodViaje = tp.eCodViaje
+WHERE v.eCodViaje = 1
+ORDER BY tp.eOrden;
+
+4) INNER JOIN módulo–sección–permiso–perfil
+SELECT m.tNombre AS modulo, s.tNombre AS seccion, pr.tNombre AS permiso
+FROM cat_modulos AS m
+INNER JOIN cat_secciones AS s ON s.eCodModulo = m.eCodModulo
+INNER JOIN cat_permisos AS pr ON pr.eCodSeccion = s.eCodSeccion
+INNER JOIN rel_perfilespermisos AS rpp ON rpp.eCodPermiso = pr.eCodPermiso
+INNER JOIN cat_perfiles AS pf ON pf.eCodPerfil = rpp.eCodPerfil
+WHERE pf.tNombre = 'Administrador'
+ORDER BY m.ePosicion, s.ePosicion, pr.ePosicion;
+
+5) LEFT JOIN ruta–paradas–parada (incluye rutas sin paradas)
+SELECT r.tNombre AS ruta, rp.eOrden, p.tNombre AS parada
+FROM cat_rutas AS r
+LEFT JOIN rel_rutasparadas AS rp ON rp.eCodRuta = r.eCodRuta
+LEFT JOIN cat_paradas AS p ON p.eCodParada = rp.eCodParada
+WHERE r.tCodigo = 'R1'
+ORDER BY rp.eOrden ASC;
+
+Procedimiento almacenado (stpConsultar) con parámetros NULL
+DELIMITER $$
+CREATE PROCEDURE stpConsultarViajes(
+  IN p_eCodRuta INT,
+  IN p_eCodServicio INT,
+  IN p_tCodEstatus CHAR(2)
+)
+BEGIN
+  SELECT v.eCodViaje, v.tNombre, v.tSentido, r.tNombre AS ruta, s.tNombre AS servicio
+  FROM pro_viajes AS v
+  INNER JOIN cat_rutas AS r ON r.eCodRuta = v.eCodRuta
+  INNER JOIN pro_servicios AS s ON s.eCodServicio = v.eCodServicio
+  WHERE (p_eCodRuta IS NULL OR v.eCodRuta = p_eCodRuta)
+    AND (p_eCodServicio IS NULL OR v.eCodServicio = p_eCodServicio)
+    AND (p_tCodEstatus IS NULL OR v.tCodEstatus = p_tCodEstatus);
+END$$
+DELIMITER ;

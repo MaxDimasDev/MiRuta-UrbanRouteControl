@@ -1,0 +1,662 @@
+.divBodega {
+	position: relative;
+	margin: 0;
+}
+.but {
+	border-style:solid;
+	border-width:thin;
+	border-color:#06F;
+	border-radius: 8px;
+	background-color:none;
+	text-align:center;
+	display: table;
+	font-stretch:semi-condensed;
+	font-weight:bold;
+}
+.butb {
+	border-style:solid;
+	border-width:thin;
+	border-color:#06F;
+	border-radius: 8px;
+	background-color:none;
+	text-align:center;
+	display: table;
+	font-stretch:semi-condensed;
+	font-weight:bold;
+}
+.but span {
+	position: relative;
+	display: table-cell; 
+	vertical-align: middle;
+	font-size: 25px;
+}
+
+.butb span {
+	position: relative;
+	display: table-cell; 
+	vertical-align: middle;
+	font-size: 10px;
+}
+/* Bodega A */
+	.A-1 {
+		position: absolute;
+		left: 504px;
+		top: 241px;
+		width: 87px;
+		height: 103px;
+	}
+	.A-2 {
+		position: absolute;
+		left: 504px;
+		top: 89px;
+		width: 87px;
+		height: 115px;
+	}
+	.A-3 {
+		position: absolute;
+		left: 381px;
+		top: 239px;
+		width: 87px;
+		height: 133px;
+	}
+	.A-4 {
+		position: absolute;
+		left: 381px;
+		top: 88px;
+		width: 87px;
+		height: 116px;
+	}
+	.A-5 {
+		position: absolute;
+		left: 250px;
+		top: 239px;
+		width: 88px;
+		height: 131px;
+	}
+	.A-6 {
+		position: absolute;
+		left: 250px;
+		top: 87px;
+		width: 89px;
+		height: 116px;
+	}
+	.A-7 {
+		position: absolute;
+		left: 140px;
+		top: 240px;
+		width: 71px;
+		height: 160px;
+	}
+	.A-8 {
+		position: absolute;
+		left: 131px;
+		top: 88px;
+		width: 84px;
+		height: 113px;
+	}
+/* */
+/* Bodega B */
+	.divBodega .B-1 {
+		position: absolute;
+		left: 568px;
+		top: 73px;
+		width: 55px;
+		height: 75px;
+	}
+	.divBodega .B-2 {
+		position: absolute;
+		left: 568px;
+		top: 220px;
+		width: 55px;
+		height: 76px;
+	}
+	.divBodega .B-3 {
+		position: absolute;
+		left: 568px;
+		top: 318px;
+		width: 54px;
+		height: 72px;
+	}
+	.divBodega .B-4 {
+		position: absolute;
+		left: 474px;
+		top: 286px;
+		width: 63px;
+		height: 92px;
+	}
+	.divBodega .B-5 {
+		position: absolute;
+		left: 474px;
+		top: 189px;
+		width: 63px;
+		height: 91px;
+	}
+	.divBodega .B-6 {
+		position: absolute;
+		left: 464px;
+		top: 73px;
+		width: 73px;
+		height: 75px;
+	}
+	.divBodega .B-7 {
+		position: absolute;
+		left: 380px;
+		top: 286px;
+		width: 63px;
+		height: 92px;
+	}
+	.divBodega .B-8 {
+		position: absolute;
+		left: 380px;
+		top: 189px;
+		width: 63px;
+		height: 91px;
+	}
+	.divBodega .B-9 {
+		position: absolute;
+		left: 376px;
+		top: 73px;
+		width: 84px;
+		height: 75px;
+	}
+	.divBodega .B-10 {
+		position: absolute;
+		left: 285px;
+		top: 286px;
+		width: 63px;
+		height: 92px;
+	}
+	.divBodega .B-11 {
+		position: absolute;
+		left: 285px;
+		top: 189px;
+		width: 63px;
+		height: 91px;
+	}
+	.divBodega .B-12 {
+		position: absolute;
+		left: 280px;
+		top: 73px;
+		width: 92px;
+		height: 75px;
+	}
+	.divBodega .B-13 {
+		position: absolute;
+		left: 193px;
+		top: 286px;
+		width: 63px;
+		height: 92px;
+	}
+	.divBodega .B-14 {
+		position: absolute;
+		left: 193px;
+		top: 189px;
+		width: 63px;
+		height: 91px;
+	}
+	.divBodega .B-15 {
+		position: absolute;
+		left: 191px;
+		top: 73px;
+		width: 84px;
+		height: 75px;
+	}
+	.divBodega .B-16 {
+		position: absolute;
+		left: 100px;
+		top: 286px;
+		width: 63px;
+		height: 92px;
+	}
+	.divBodega .B-17 {
+		position: absolute;
+		left: 100px;
+		top: 190px;
+		width: 63px;
+		height: 91px;
+	}
+	.divBodega .B-18 {
+		position: absolute;
+		left: 102px;
+		top: 73px;
+		width: 84px;
+		height: 75px;
+	}
+/* */
+/* Bodega C */
+	.C-1 {
+		position: absolute;
+		left: 493px;
+		top: 175px;
+		width: 64px;
+		height: 50px;
+		-webkit-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-13deg, -9deg);
+		transform: rotate(-20deg) skew(-13deg, -9deg);
+	}
+	.C-2 {
+		position: absolute;
+		left: 487px;
+		top: 119px;
+		width: 70px;
+		height: 48px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-20deg) skew(-15deg, -9deg);
+	}
+	.C-3 {
+		position: absolute;
+		left: 470px;
+		top: 34px;
+		width: 87px;
+		height: 46px;
+		-webkit-transform: rotate(-20deg) skew(-12deg, -5deg);
+		-moz-transform: rotate(-20deg) skew(-12deg, -5deg);
+		-ms-transform: rotate(-20deg) skew(-12deg, -5deg);
+		-o-transform: rotate(-20deg) skew(-12deg, -5deg);
+		transform: rotate(-20deg) skew(-12deg, -5deg);
+	}
+	.C-4 {
+		position: absolute;
+		left: 414px;
+		top: 216px;
+		width: 64px;
+		height: 43px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-22deg) skew(-10deg, -3deg);
+	}
+	.C-5 {
+		position: absolute;
+		left: 404px;
+		top: 172px;
+		width: 64px;
+		height: 38px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-22deg) skew(-10deg, -6deg);
+	}
+	.C-6 {
+		position: absolute;
+		left: 373px;
+		top: 86px;
+		width: 103px;
+		height: 41px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-23deg) skew(-12deg, -7deg);
+	}
+	.C-7 {
+		position: absolute;
+		left: 339px;
+		top: 255px;
+		width: 56px;
+		height: 35px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-22deg) skew(-10deg, -3deg);
+	}
+	.C-8 {
+		position: absolute;
+		left: 331px;
+		top: 215px;
+		width: 56px;
+		height: 34px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-22deg) skew(-10deg, -5deg);
+	}
+	.C-9 {
+		position: absolute;
+		left: 302px;
+		top: 134px;
+		width: 76px;
+		height: 40px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-23deg) skew(-12deg, -5.9deg);
+	}
+	.C-10 {
+		position: absolute;
+		left: 242px;
+		top: 335px;
+		width: 94px;
+		height: 29px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-31deg) skew(-17deg, -8deg);
+	}
+	.C-11 {
+		position: absolute;
+		left: 228px;
+		top: 287px;
+		width: 79px;
+		height: 28px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-31deg) skew(-18deg, -8deg);
+	}
+	.C-12 {
+		position: absolute;
+		left: 220px;
+		top: 254px;
+		width: 79px;
+		height: 26px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-31deg) skew(-18deg, -8deg);
+	}
+	.C-13 {
+		position: absolute;
+		left: 202px;
+		top: 188px;
+		width: 107px;
+		height: 33px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-31deg) skew(-18deg, -6deg);
+	}
+	.C-14 {
+		position: absolute;
+		left: 152px;
+		top: 405px;
+		width: 107px;
+		height: 29px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-31deg) skew(-17deg, -8deg);
+	}
+	.C-15 {
+		position: absolute;
+		left: 155px;
+		top: 341px;
+		width: 84px;
+		height: 29px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-31deg) skew(-18deg, -8deg);
+	}
+	.C-16 {
+		position: absolute;
+		left: 145px;
+		top: 309px;
+		width: 88px;
+		height: 26px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-31deg) skew(-18deg, -8deg);
+	}
+	.C-17 {
+		position: absolute;
+		left: 113px;
+		top: 262px;
+		width: 107px;
+		height: 31px;
+		-webkit-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-15deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-15deg, -9deg);
+		transform: rotate(-31deg) skew(-18deg, -8deg);
+	}
+/* */
+/* Bodega D */
+	.D-1 {
+		position: absolute;
+		left: 435px;
+		top: 310px;
+		width: 111px;
+		height: 80px;
+	}
+	.D-2 {
+		position: absolute;
+		left: 434px;
+		top: 205px;
+		width: 111px;
+		height: 80px;
+	}
+	.D-3 {
+		position: absolute;
+		left: 434px;
+		top: 102px;
+		width: 111px;
+		height: 80px;
+	}
+	.D-4 {
+		position: absolute;
+		left: 276px;
+		top: 310px;
+		width: 111px;
+		height: 80px;
+	}
+	.D-5 {
+		position: absolute;
+		left: 274px;
+		top: 205px;
+		width: 112px;
+		height: 80px;
+	}
+	.D-6 {
+		position: absolute;
+		left: 274px;
+		top: 102px;
+		width: 112px;
+		height: 80px;
+	}
+	.D-7 {
+		position: absolute;
+		left: 141px;
+		top: 303px;
+		width: 78px;
+		height: 88px;
+	}
+	.D-8 {
+		position: absolute;
+		left: 141px;
+		top: 209px;
+		width: 78px;
+		height: 89px;
+	}
+	.D-9 {
+		position: absolute;
+		left: 143px;
+		top: 102px;
+		width: 76px;
+		height: 81px;
+	}
+/* */
+/* Bodega E */
+	.E-1 {
+		position: absolute;
+		left: 512px ;
+		top: 95px;
+		width: 59PX;
+		height: 78px;
+	}
+	.E-2 {
+		position: absolute;
+		left: 512px ;
+		top: 200px;
+		width: 59PX;
+		height: 93px;
+	}
+	.E-3 {
+		position: absolute;
+		left: 512px ;
+		top: 300px;
+		width: 59PX;
+		height: 93px;
+	}
+	.E-4 {
+		position: absolute;
+		left: 352px ;
+		top: 95px;
+		width: 119PX;
+		height: 78px;
+	}
+	.E-5 {
+		position: absolute;
+		left: 352px ;
+		top: 200px;
+		width: 120PX;
+		height: 89px;
+	}
+	.E-6 {
+		position: absolute;
+		left: 352px ;
+		top: 314px;
+		width: 120PX;
+		height: 79px;
+	}
+	.E-7 {
+		position: absolute;
+		left: 223px ;
+		top: 95px;
+		width: 125PX;
+		height: 78px;
+	}
+	.E-8 {
+		position: absolute;
+		left: 223px;
+		top: 200px;
+		width: 125PX;
+		height: 89px;
+	}
+	.E-9 {
+		position: absolute;
+		left: 223px;
+		top: 314px;
+		width: 125PX;
+		height: 79px;
+	}
+	.E-10 {
+		position: absolute;
+		left: 90px;
+		top: 95px;
+		width: 128PX;
+		height: 78px;
+	}
+	.E-11 {
+		position: absolute;
+		left: 90px;
+		top: 200px;
+		width: 128PX;
+		height: 89px;
+	}
+	.E-12 {
+		position: absolute;
+		left: 90px;
+		top: 314px;
+		width: 128PX;
+		height: 79px;
+	}
+/* */
+/* Bodega PATIO */
+	.P-1 {
+		position: absolute;
+		left: 142px;
+		top: 343px;
+		width: 129px;
+		height: 23px;
+		-webkit-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-13deg, -9deg);
+		transform: rotate(-27deg) skew(-20deg, -1deg);
+	}
+	.P-2 {
+		position: absolute;
+		left: 270px;
+		top: 312px;
+		width: 107px;
+		height: 27px;
+	}
+	.P-3 {
+		position: absolute;
+		left: 505px;
+		top: 228px;
+		width: 51px;
+		height: 68px;
+	}
+	.P-4 {
+		position: absolute;
+		left: 509px;
+		top: 154px;
+		width: 53px;
+		height: 64px;
+	}
+	.P-5 {
+		position: absolute;
+		left: 442px ;
+		top: 133px;
+		width: 117PX;
+		height: 11px;
+	}
+	.P-6 {
+		position: absolute;
+		left: 387px ;
+		top: 133px;
+		width: 46PX;
+		height: 11px;
+	}
+	.P-7 {
+		position: absolute;
+		left: 277px ;
+		top: 133px;
+		width: 81PX;
+		height: 11px;
+	}
+	.P-8 {
+		position: absolute;
+		left: 317px ;
+		top: 40px;
+		width: 121PX;
+		height: 11px;
+		-webkit-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-13deg, -9deg);
+		transform: rotate(23deg);
+	}
+	.P-9 {
+		position: absolute;
+		left: 437px ;
+		top: 110px;
+		width: 214PX;
+		height: 11px;
+		-webkit-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-moz-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-ms-transform: rotate(-20deg) skew(-13deg, -9deg);
+		-o-transform: rotate(-20deg) skew(-13deg, -9deg);
+		transform: rotate(22.6deg);
+	}
+/* */
