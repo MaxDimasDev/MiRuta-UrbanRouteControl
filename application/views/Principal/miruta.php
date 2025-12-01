@@ -1,50 +1,80 @@
-<?php // Vista pública MiRuta dentro del layout del sistema ?>
-<section role="main" class="content-body">
-    <header class="page-header">
-        <h2>MiRuta — Planear tu viaje</h2>
-        <div class="right-wrapper pull-right">
-            <ol class="breadcrumbs">
-                <li>
-                    <a href="<?= site_url('MiRuta'); ?>">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </li>
-                <li><span>MiRuta</span></li>
-            </ol>
-            <span style="padding-right: 30px;"></span>
-        </div>
-    </header>
+<!doctype html>
+<html class="fixed" lang="es-MX">
 
+<head>
+    <meta charset="UTF-8">
+    <title><?= isset($tTituloPagina) && $tTituloPagina ? $tTituloPagina : 'MiRuta — Planear tu viaje'; ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="<?= base_url() ?>assets/images/favicon.ico" rel="shortcut icon">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/vendor/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/vendor/font-awesome/css/font-awesome.css" />
     <style>
-        .container { max-width: 1100px; margin: 0 auto; padding: 0; }
+        body { background: #f7f8fa; }
+        .miruta-header { background-color: #fff; color:#222; font-size:22px; padding:10px 16px; margin:0; border-bottom: 1px solid #000; display:flex; align-items:center; justify-content:center; position:relative; }
+        .miruta-header .back-btn { position:absolute; right:12px; top:50%; transform: translateY(-50%); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 12px; }
         .card { background: #fff; border: 1px solid #e1e4e8; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); padding: 16px; margin-bottom: 16px; }
         h1 { font-size: 20px; margin: 0 0 8px 0; }
         .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; }
         .controls label { display:block; font-weight:600; margin-bottom:6px; }
         .controls select, .controls button { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #d0d7de; border-radius: 6px; background: #fff; }
-        .controls button { cursor: pointer; background: #0969da; color: #fff; border-color: #0969da; }
-        .controls button:disabled { background:#9bbcf0; border-color:#9bbcf0; cursor: not-allowed; }
+        .controls button { cursor: pointer; background: #00bcd4; color: #000; border-color: #00bcd4; }
+        .controls button:disabled { background:#99e1ea; border-color:#99e1ea; color:#000; cursor: not-allowed; }
+        .line-tools button { cursor: pointer; background: #00bcd4; color: #000; border-color: #00bcd4; border-radius: 6px; }
+        .line-tools button:disabled { background:#99e1ea; border-color:#99e1ea; color:#000; }
+        .route-item .btn-primary, .route-item .btn-default { background:#00bcd4; color:#000; border-color:#00bcd4; }
+        .route-item .btn-primary:hover, .route-item .btn-default:hover, .controls button:hover, .line-tools button:hover, .miruta-header .back-btn:hover { background:#00a8c2; border-color:#00a8c2; color:#000; }
+        .miruta-header .back-btn { background:#00bcd4; color:#000; border-color:#00bcd4; }
         .results h2 { font-size: 16px; margin: 0 0 8px 0; }
         .route-item { border:1px solid #e1e4e8; border-radius:6px; padding:10px; margin-bottom:8px; }
         .route-main { display:flex; align-items:center; gap:10px; }
         .color-dot { width: 14px; height: 14px; border-radius: 50%; border:1px solid #bbb; background:#ccc; }
-        .map { position: relative; height: 520px; border: 1px solid #e1e4e8; border-radius: 8px; background: #fff; overflow: hidden; }
+        /* Botones de acciones de sugerencia en bloque y 100% */
+        .route-item .btn { display:block; width:100%; background:#00bcd4; color:#000; border-color:#00bcd4; border-radius:6px; }
+        .route-item .btn + .btn { margin-top:10px; }
+        .route-item .btn:disabled { background:#99e1ea; border-color:#99e1ea; color:#000; }
+        .map { position: relative; height: clamp(360px, 62vh, 640px); border: 1px solid #e1e4e8; border-radius: 8px; background: #fff; overflow: hidden; }
         #leafletMap { position:absolute; inset:0; z-index:0; }
         .map-grid { position:absolute; inset:0; z-index:1; }
         .map-overlay { position:absolute; inset:0; z-index:2; }
-        .map-banner { position:absolute; top:10px; left:10px; background:rgba(9,105,218,0.9); color:#fff; padding:8px 12px; border-radius:6px; font-size:14px; pointer-events:none; }
+        .map-banner { position:absolute; top:10px; left:10px; background:rgba(9,105,218,0.9); color:#000; padding:8px 12px; border-radius:6px; font-size:14px; pointer-events:none; }
         .hint { color:#57606a; font-size: 13px; }
         .line-tools { margin-top: 10px; }
         .line-tools h2 { font-size: 16px; margin: 10px 0; }
         .horarios { margin-top: 8px; }
         .horarios-item { border:1px dashed #e1e4e8; border-radius:6px; padding:8px; margin-bottom:6px; font-size:13px; }
+        /* Caja inline de sugerencias (igual que Panel) */
+        .suggestions-box { display:none; border:1px solid #e1e4e8; border-radius:8px; background:#fff; padding:10px; margin-top:8px; }
+        .suggestions-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+        .suggestions-title { font-size:15px; font-weight:600; color:#24292f; }
+        .suggestions-close { width:14px; height:16px; box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; border:1px solid #d0d7de; border-radius:4px; background:#fff; color:#57606a; font-size:10px; line-height:1; padding:0; cursor:pointer; }
+        .suggestions-close:hover { background:#f6f8fa; color:#24292f; }
+        
+        /* Responsivo: apilar columnas y ajustar tipografías/espacios en pantallas pequeñas */
+        @media (max-width: 992px) {
+            .grid { grid-template-columns: 1fr; gap: 12px; }
+        }
+        @media (max-width: 576px) {
+            .container { padding: 0 8px; }
+            .miruta-header { font-size: 18px; }
+            .controls select,
+            .controls button,
+            #buscarLinea { font-size: 14px; }
+            .suggestions-title { font-size: 14px; }
+        }
     </style>
+</head>
 
-    <div class="container">
-        <div class="card">
-            <h1>Vista pública de MiRuta</h1>
-            <p class="hint">Selecciona una parada de origen y una de destino para obtener rutas sugeridas. El mapa es una cuadricula simple enfocada al funcionamiento.</p>
-        </div>
+<body>
+<!-- BEGIN BODY -->  
+<section role="main" class="content-body">
+    <div class="miruta-header">
+        <span>Bienvenido a MiRuta</span>
+        <a href="<?= site_url('Sesion'); ?>" class="btn btn-default btn-sm back-btn"><i class="fa fa-arrow-left"></i> Atrás</a>
+    </div>
+
+    <div class="container" style="padding-top:12px;">
+        
 
         <div class="grid">
             <div class="card controls">
@@ -68,12 +98,16 @@
                 <p class="hint" id="hint"></p>
 
                 <div class="results" id="resultados">
-                    <h2>Sugerencias</h2>
-                    <div id="listaRutas"></div>
+                    <div id="sugerenciasBox" class="suggestions-box">
+                        <div class="suggestions-header">
+                            <div class="suggestions-title">Rutas sugeridas</div>
+                            <button id="cerrarSugerencias" class="suggestions-close" aria-label="Cerrar">×</button>
+                        </div>
+                        <div id="listaRutas"></div>
+                    </div>
                 </div>
 
                 <div class="line-tools">
-                    <h2>Explorar líneas</h2>
                     <label for="buscarLinea">Buscar línea (nombre o código)</label>
                     <input id="buscarLinea" type="text" placeholder="Ej. 40 N" style="width:100%;padding:8px;margin-bottom:10px;border:1px solid #d0d7de;border-radius:6px;" />
                     <label for="lineaSel">Línea</label>
@@ -84,6 +118,10 @@
                                 <?php echo htmlspecialchars($r->tNombre . ($r->tCodigo ? ' ('.$r->tCodigo.')' : '')); ?>
                             </option>
                         <?php }} ?>
+                    </select>
+                    <label for="paradaSel">Parada de la línea</label>
+                    <select id="paradaSel" disabled>
+                        <option value="">Selecciona parada</option>
                     </select>
                     <button id="mostrarLinea" disabled>Mostrar trazado</button>
                     <button id="verHorarios" disabled>Ver horarios</button>
@@ -123,6 +161,7 @@
         const listaHor   = document.getElementById('listaHorarios');
         const listaPar   = document.getElementById('listaParadas');
         const buscarLinea= document.getElementById('buscarLinea');
+        const paradaSel  = document.getElementById('paradaSel');
         const map        = document.getElementById('mapa');
         const leafletDiv = document.getElementById('leafletMap');
         const gridCanvas = document.getElementById('gridCanvas');
@@ -135,6 +174,14 @@
         let currentPoints = []; // {x,y, parada}
         let currentColor  = '#0969da';
         let highlightIdx  = -1;
+        let currentRouteStops = [];
+        const sugerenciasBox = document.getElementById('sugerenciasBox');
+        const cerrarSugBtn   = document.getElementById('cerrarSugerencias');
+
+        cerrarSugBtn.addEventListener('click', () => {
+            sugerenciasBox.style.display = 'none';
+            listaRutas.innerHTML = '';
+        });
 
         // Leaflet setup
         let leafletReady = !!window.L;
@@ -179,6 +226,10 @@
             const ok = !!lineaSel.value;
             mostrarBtn.disabled = !ok;
             horariosBtn.disabled = !ok;
+            // Reset selector de parada al cambiar línea
+            paradaSel.innerHTML = '<option value="">Selecciona parada</option>';
+            paradaSel.disabled = true;
+            highlightIdx = -1;
         }
 
         origenSel.addEventListener('change', validar);
@@ -259,6 +310,7 @@
         }
 
         function drawRoute(paradas, color){
+            currentColor = color || '#0969da';
             const coords = paradas.map(p=>({lat:parseFloat(p.dLatitud), lng:parseFloat(p.dLongitud)})).filter(ll=>!isNaN(ll.lat) && !isNaN(ll.lng));
             const canUseLeaflet = leafletReady && coords.length>=2;
             if (canUseLeaflet) {
@@ -320,6 +372,7 @@
 
         buscarBtn.addEventListener('click', async () => {
             listaRutas.innerHTML = '';
+            sugerenciasBox.style.display = 'none';
             const origen  = origenSel.value;
             const destino = destinoSel.value;
             const url     = '<?php echo site_url('MiRuta/plan'); ?>';
@@ -335,6 +388,7 @@
                 });
                 const data = await res.json();
                 if (data && data.eExito && Array.isArray(data.sugerencias) && data.sugerencias.length) {
+                    sugerenciasBox.style.display = 'block';
                     data.sugerencias.forEach(r => {
                         const item = document.createElement('div');
                         item.className = 'route-item';
@@ -349,7 +403,7 @@
                         sub.className = 'hint';
                         sub.textContent = `Dirección sugerida: ${r.tDireccionSugerida}. Origen #${r.eOrdenOrigen}, Destino #${r.eOrdenDestino}`;
                         const actions = document.createElement('div');
-                        actions.innerHTML = '<button style="margin-left:10px" class="btn btn-xs btn-primary">Mostrar en mapa</button> <button class="btn btn-xs btn-default">Ver horarios</button>';
+                        actions.innerHTML = '<button class="btn btn-xs btn-primary">Mostrar en mapa</button> <button class="btn btn-xs btn-default">Ver horarios</button>';
                         const btnMostrar = actions.querySelector('button.btn-primary');
                         const btnHorarios= actions.querySelector('button.btn-default');
                         btnMostrar.addEventListener('click', async ()=>{
@@ -372,12 +426,14 @@
                     empty.className = 'hint';
                     empty.textContent = 'No se encontraron rutas que conecten ambas paradas.';
                     listaRutas.appendChild(empty);
+                    sugerenciasBox.style.display = 'block';
                 }
             } catch (err) {
                 const e = document.createElement('div');
                 e.className = 'hint';
                 e.textContent = 'Ocurrió un error al consultar sugerencias.';
                 listaRutas.appendChild(e);
+                sugerenciasBox.style.display = 'block';
             } finally {
                 buscarBtn.disabled = false;
                 buscarBtn.textContent = 'Buscar rutas';
@@ -390,26 +446,48 @@
             const params = new URLSearchParams({ eCodRuta: ruta });
             mostrarBtn.disabled = true; mostrarBtn.textContent = 'Cargando…'; listaHor.innerHTML='';
             listaPar.innerHTML='';
+            paradaSel.innerHTML = '<option value="">Selecciona parada</option>';
+            paradaSel.disabled = true;
+            highlightIdx = -1;
             try {
                 const res = await fetch(url, { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}, body: params.toString() });
                 const data = await res.json();
                 if (data && data.eExito && Array.isArray(data.paradas) && data.paradas.length){
                     const opt = lineaSel.options[lineaSel.selectedIndex];
                     const color = opt.getAttribute('data-color') || '#0969da';
-                    drawRoute(data.paradas, color);
-                    listaPar.innerHTML = '<div class="hint">Paradas de la línea (clic para resaltar):</div>';
+                    currentRouteStops = data.paradas;
+                    drawRoute(currentRouteStops, color);
+                    // Poblar desplegable de paradas
                     data.paradas.forEach((p,i)=>{
-                        const li = document.createElement('div'); li.className='horarios-item';
-                        li.textContent = `${i+1}. ${p.tNombre || 'Parada'}${p.tDireccion ? ' • '+p.tDireccion : ''}`;
-                        li.style.cursor='pointer';
-                        li.addEventListener('click', ()=>{ highlightIdx = i; drawRoute(data.paradas, color); });
-                        listaPar.appendChild(li);
+                        const o = document.createElement('option');
+                        o.value = p.eCodParada ? String(p.eCodParada) : String(i);
+                        o.textContent = `${i+1}. ${p.tNombre || 'Parada'}${p.tDireccion ? ' • '+p.tDireccion : ''}`;
+                        o.setAttribute('data-idx', String(i));
+                        paradaSel.appendChild(o);
                     });
+                    paradaSel.disabled = false;
                 } else {
                     ctx.clearRect(0,0,canvas.width,canvas.height);
                 }
             } catch (e){ ctx.clearRect(0,0,canvas.width,canvas.height); }
             finally { mostrarBtn.disabled=false; mostrarBtn.textContent='Mostrar trazado'; }
+        });
+
+        // Selección de parada: resalta y centra en el mapa
+        paradaSel.addEventListener('change', ()=>{
+            const selIdxAttr = paradaSel.options[paradaSel.selectedIndex]?.getAttribute('data-idx');
+            if (!selIdxAttr){ highlightIdx = -1; drawRoute(currentRouteStops, currentColor); return; }
+            const idx = parseInt(selIdxAttr, 10);
+            if (isNaN(idx)) { highlightIdx = -1; drawRoute(currentRouteStops, currentColor); return; }
+            highlightIdx = idx;
+            drawRoute(currentRouteStops, currentColor);
+            if (leafletReady && currentRouteStops[idx]){
+                const p = currentRouteStops[idx];
+                const lat = parseFloat(p.dLatitud), lng = parseFloat(p.dLongitud);
+                if (!isNaN(lat) && !isNaN(lng) && leafletMap){
+                    leafletMap.setView([lat,lng], Math.max(leafletMap.getZoom() || 13, 15));
+                }
+            }
         });
 
         horariosBtn.addEventListener('click', async () => {
@@ -465,12 +543,9 @@
     </script>
 </section>
 
-<!-- Vendor JS y cierre del layout -->
+<!-- Vendor JS -->
 <script src="<?= base_url(); ?>assets/vendor/jquery/jquery.js"></script>
 <script src="<?= base_url(); ?>assets/vendor/bootstrap/js/bootstrap.js"></script>
-<script src="<?= base_url(); ?>assets/javascripts/theme.js"></script>
-<script src="<?= base_url(); ?>assets/javascripts/theme.custom.js"></script>
-<script src="<?= base_url(); ?>assets/javascripts/theme.init.js"></script>
 
 </body>
 </html>

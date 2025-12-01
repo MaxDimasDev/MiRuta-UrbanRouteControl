@@ -37,12 +37,27 @@ class Configuracion extends CI_Controller {
 		$this->load->view('Encabezado/menu');
 		$this->load->view('Configuracion/logevento', $data);
 	}
+
+	// Página dedicada: Historial completo de eventos
+	public function historial_eventos() {
+		$data['con_menu']		= $this->secciones_m->con_menu($this->session->userdata("eCodPerfil"));
+		$data['con_seccion']	= $this->secciones_m->con_secciones(false, false, "m1_s1");
+		$data['con_permisos']	= $this->secciones_m->con_perfilpermiso($this->session->userdata("eCodPerfil"), "m1_s1");
+		$data['con_eventos']	= $this->catalogos_m->con_eventos();
+		$data['con_usuarios']	= $this->catalogos_m->con_usuarios();
+
+		$this->load->view('Encabezado/header', $data);
+		$this->load->view('Encabezado/menu');
+		$this->load->view('Configuracion/logevento_full', $data);
+	}
 	public function detalle_evento() {
 		$aFiltro['eCodUsuario']		= ($this->input->post("eCodUsuario")	? $this->input->post("eCodUsuario")		: NULL);
 		$aFiltro['eCodEvento']		= ($this->input->post("eCodEvento")		? $this->input->post("eCodEvento")		: NULL);
 		$aFiltro['fhFechaInicio']	= ($this->input->post("fhFechaInicio")	? $this->input->post("fhFechaInicio")	: NULL);
 		$aFiltro['fhFechaFinal']	= ($this->input->post("fhFechaFinal")	? $this->input->post("fhFechaFinal")	: NULL);
 		$aFiltro['tEvento']			= ($this->input->post("tEvento")		? $this->input->post("tEvento")			: NULL);
+		// Limit opcional (para mostrar últimos N registros)
+		$aFiltro['limit']			= ($this->input->post("limit")			? (int)$this->input->post("limit") : NULL);
 
 		$con_logeventos = $this->configuraciones_m->con_logeventos($aFiltro);
 
@@ -83,13 +98,14 @@ class Configuracion extends CI_Controller {
 		$data['con_menu']		= $this->secciones_m->con_menu($this->session->userdata("eCodPerfil"));
 		$data['con_seccion']	= $this->secciones_m->con_secciones(false, false, "m1_s2");
 		$data['con_permisos']	= $this->secciones_m->con_perfilpermiso($this->session->userdata("eCodPerfil"), "m1_s2");
-		$data['con_eventos']	= $this->catalogos_m->con_eventos();
-		$data['con_usuarios']	= $this->catalogos_m->con_usuarios();
 
-		$this->load->view('Encabezado/header', $data);
-		$this->load->view('Encabezado/menu');
+		$this->load->view('Encabezado/cabecera', $data);
+		$this->load->view('Encabezado/menu', $data);
 		$this->load->view('Configuracion/logevento', $data);
+		$this->load->view('Encabezado/pie', $data);
 	}
+
+    // Nota: Se eliminó la vista de preferencias y su guardado asociado.
 
 
 }

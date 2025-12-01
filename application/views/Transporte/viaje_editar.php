@@ -16,7 +16,7 @@
 
                     <div class="row" style="margin-bottom: 10px;">
                         <div class="col-md-12">
-                            <a href="<?= site_url('Transporte/m4_s3'); ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i> Volver a Horarios</a>
+<a href="<?= site_url('Administracion_de_transportes/Horarios'); ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i> Volver a Horarios</a>
                         </div>
                     </div>
 

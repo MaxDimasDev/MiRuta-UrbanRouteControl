@@ -10,6 +10,7 @@ class Panel extends CI_Controller {
 		$this->load->model('secciones_m');
 		$this->load->model('catalogos_m');
 		$this->load->model('consultas_m');
+		$this->load->model('Transporte_m');
 		$this->load->helper('date_helper');
 		date_default_timezone_set('America/Mexico_City');
 
@@ -28,6 +29,10 @@ class Panel extends CI_Controller {
 		$data['con_menu']		= $this->secciones_m->con_menu($this->session->userdata("eCodPerfil"));
 		$IPServer 				= gethostbyname($_SERVER['HTTP_HOST']); //Esto da la ip del Servidor. 
 		$IPRemotaServer 		= $_SERVER['REMOTE_ADDR'];
+
+		// Datos para embed de MiRuta dentro del panel
+		$data['con_paradas']	= $this->Transporte_m->con_paradas(false, false, 'AC');
+		$data['con_rutas']		= $this->Transporte_m->con_rutas(false, 'AC');
 
 		$this->load->view('Encabezado/header', $data);
 		$this->load->view('Encabezado/menu');

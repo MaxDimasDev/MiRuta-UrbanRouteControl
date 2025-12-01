@@ -1,6 +1,7 @@
 # OS/IDE
 .DS_Store
 Thumbs.db
+desktop.ini
 *.log
 error_log
 
@@ -24,3 +25,9 @@ node_modules/
 .env.*
 *.tmp
 *.temp
+
+# Datos locales de MySQL (no versionar instancias locales)
+mysql-data/
+
+# Configuración local de SFTP
+sftp-config.json

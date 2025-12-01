@@ -10,10 +10,10 @@ class Inserts_m extends CI_Model {
     public function ins_log($aDatos) {
         //campos de la tabla
         $data = array(
-            'eCodUsuario'       =>  ($this->session->userdata('eCodUsuario')  ? $this->session->userdata('eCodUsuario') : $aDatos['eCodUsuario']),
+            'eCodUsuario'       =>  (isset($aDatos['eCodUsuario']) ? $aDatos['eCodUsuario'] : ($this->session->userdata('eCodUsuario') ? $this->session->userdata('eCodUsuario') : NULL)),
             'eCodEvento'        =>  ($aDatos['eCodEvento']  ? $aDatos['eCodEvento'] : NULL),
             'tEvento'           =>  ($aDatos['tEvento']     ? $aDatos['tEvento']    : NULL),
-            'fhFechaRegistro'   =>  mdate('%Y/%m/%d %H:%i:%s', time()),
+            'fhFechaRegistro'   =>  (isset($aDatos['fhFechaRegistro']) && $aDatos['fhFechaRegistro'] ? $aDatos['fhFechaRegistro'] : mdate('%Y/%m/%d %H:%i:%s', time())),
             'tCodEstatus'       =>  "AC"
             );
         $this->db->insert('pro_logseventos',$data);

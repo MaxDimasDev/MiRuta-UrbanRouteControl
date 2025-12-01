@@ -35,9 +35,7 @@ Esta guía profundiza en cómo está organizado el proyecto, las responsabilidad
 - `Configuracion`:
   - `m1_s1()` log de eventos.
   - `m1_s2()` preferencias del sistema.
-- Controladores de diagnóstico:
-  - `Test_db` – conectividad BD, tablas y muestra muestra de `cat_perfiles`.
-  - `Test_menu` – sesión simulada y render lógico de menú con datos.
+  
 
 ## Modelos Clave
 - `Secciones_m` – Menú y permisos:
@@ -64,7 +62,7 @@ Esta guía profundiza en cómo está organizado el proyecto, las responsabilidad
 - `application/config/routes.php`:
   - `default_controller` = `Sesion`.
 - `application/config/config.php`:
-  - `base_url` debe apuntar a `http://localhost/utma-academico/` en desarrollo.
+  - `base_url` se calcula de forma dinámica (no suele requerir cambios en desarrollo).
 - `application/config/database.php`:
   - Debe apuntar a la BD `utma_academico`.
 
@@ -100,8 +98,14 @@ Esta guía profundiza en cómo está organizado el proyecto, las responsabilidad
 - `Transporte/m4_s2` – paradas.
 - `Transporte/m4_s3` – horarios.
 - `Configuracion/m1_s1` – log eventos.
-- `Test_db` – prueba BD.
-- `Test_menu` – prueba menú.
+  
+Rutas amigables configuradas en `application/config/routes.php`:
+- `Administracion_de_sistema/Inicio` → `Panel`.
+- `Administracion_de_transportes/Rutas` → `Transporte/m4_s1`.
+- `Administracion_de_transportes/Paradas` → `Transporte/m4_s2`.
+- `Administracion_de_transportes/Horarios` → `Transporte/m4_s3`.
+- `Administracion_de_sistema/Logs_del_sistema` → `Configuracion/m1_s1`.
+- `Administracion_de_sistema/Historial_de_eventos` → `Configuracion/historial_eventos`.
 
 ## Limitaciones Conocidas
 - Módulos `Catalogo` y `Usuario` se ocultan en el menú en bootstrap.

@@ -1,6 +1,6 @@
 {
-  "short_name": "utma Test JLVM",
-  "name": "Examen de utma Ing. Vargas",
+  "short_name": "Sistema MiRuta",
+  "name": "Proyecto final de la asignatura de FDM",
   "icons": [
     {
       "src": "/assets/images/android-icon-48x48.png",

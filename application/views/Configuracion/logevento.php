@@ -1,18 +1,17 @@
 <section role="main" class="content-body">
-					<?php foreach ($con_seccion as $sec) { ?>
-							<header class="page-header">
-								<h2><i class="<?= $sec->tModuloIcono;?>"></i>  <?= $sec->tModulo?></h2>
-								<div class="right-wrapper pull-right">
-									<ol class="breadcrumbs">
-										<li><span><?= $sec->tModulo;?></span></li>
-										<li><span><?= $sec->tSeccion;?></span></li>
-									</ol>
-									<?php $tTitulo = $sec->tSeccion; ?>
-									<span style="padding-right: 30px;"></span>
-								</div>
-							</header>
-					<?php }
-					?>
+                    <?php foreach ($con_seccion as $sec) { ?>
+                            <header class="page-header">
+                                <h2>Logs del sistema</h2>
+                                <div class="right-wrapper pull-right">
+                                    <ol class="breadcrumbs">
+                                        <li><span>Logs del sistema</span></li>
+                                        <li><span>Historial de eventos del sistema</span></li>
+                                    </ol>
+                                    <?php $tTitulo = 'Historial de eventos del sistema'; ?>
+                                    <span style="padding-right: 30px;"></span>
+                                </div>
+                            </header>
+                    <?php } ?>
 
 					<!-- start: page -->
 
@@ -22,68 +21,16 @@
 							</div>
 							<h2 class="panel-title"><?= $tTitulo;?></h2>
 						</header>
-						<div class="panel-body">
-							<div class="col-xs-12">
-								<form class="form-bordered" action="<?= site_url("Impresion/exportarSolicitudEntradaExcel")?>" method="post" style="margin-bottom: 5px;">
-									<div class="row">
-										<div class="col-xs-12">
-											<div class="btn-group btn-group-justified">
-												<a role="button" class="btn btn-default" onclick="cargar_evento(this);">
-													<i class="fa fa-bug"></i><br>Eventos
-												</a>
-									<?php foreach ($con_eventos as $ce) { ?>
-													<a role="button" class="btn btn-default" onclick="cargar_evento(this, <?= $ce->eCodEvento;?>);">
-														<?= $ce->tIcono."<br>".$ce->tNombreCorto;?>
-													</a>
-									<?php } ?>
-											</div>
-										</div>
-										<input type="hidden" id="eCodEvento" name="eCodEvento" value="">
-									</div><br>
-									<div class="row">
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="control-label" for="inputDefault"> Rango de Fechas</label>
-												<div class="input-daterange input-group" data-plugin-datepicker="">
-													<span class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-													</span>
-													<input type="text" class="form-control" id="fhFechaInicio" name="fhFechaInicio">
-													<span class="input-group-addon">a</span>
-													<input type="text" class="form-control" id="fhFechaFinal" name="fhFechaFinal">
-												</div>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="form-group">
-												<label class="control-label" for="inputDefault">Usuario</label>
-												<select data-plugin-selectTwo class="form-control populate" id="eCodUsuario" name="eCodUsuario">
-													<option value="">- Todos -</option>
-												<?php foreach ($con_usuarios as $cu) { ?>
-														<option value="<?= $cu->eCodUsuario;?>"><?= $cu->tNombre;?></option>
-												<?php } ?>
-												</select>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<div class="form-group">
-												<label class="control-label" for="inputDefault">Evento</label>
-												<input type="text" class="form-control" id="tEvento" name="tEvento">
-											</div>
-										</div>
-										<div class="col-md-2">
-											<div class="form-group" align="right">
-												<br>
-												<div class="btn-group">
-													<button type='button' class='btn btn-primary' onclick='filtro_logeventos(this);'><i class='fa fa-search'></i> Filtrar</button>
-													<!--<button class='btn btn-default'><i class='fa fa-file-excel-o'></i> Exportar Excel</button>-->
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
+                        <div class="panel-body">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:right">
+                                        <a href='<?= site_url("Administracion_de_sistema/Historial_de_eventos"); ?>' class='btn btn-default'><i class='fa fa-list'></i> Ver historial completo</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
 
 						<div id="divLogEvento" class="panel-body tab-content">
 						</div>
@@ -132,45 +79,42 @@
 		<script src="<?= base_url();?>assets/javascripts/tables/examples.datatables.tabletools.js"></script>
 		<script src="<?= base_url();?>assets/javascripts/ui-elements/examples.modals.js"></script>
 
-		<script type="text/javascript">
+        <script type="text/javascript">
 
-			function cargar_evento(oObjeto, eCodEvento){
-				$('a[role="button"]').each(function(){
-					if ($(this).hasClass("btn-primary")){
-						$(this).removeClass("btn-primary");
-					}
-				});
-				$(oObjeto).addClass("btn-primary");
-				$("#eCodEvento").val(eCodEvento);
-			}
+            // Se elimina la selección por tipo de evento (chips)
 
-			function filtro_logeventos(oObjeto){
-				$('#divLogEvento').html("<div class=\"alert alert-info\"><img src=\"<?= base_url();?>/assets/images/loader.gif\" width=\"30px\"> <strong> Procesando informaci&oacute;n ...</strong></div>");
+            function filtro_logeventos(limit){
+                $('#divLogEvento').html("<div class=\"alert alert-info\"><img src=\"<?= base_url();?>/assets/images/loader.gif\" width=\"30px\"> <strong> Procesando informaci&oacute;n ...</strong></div>");
 
-				$.post('<?= site_url("Configuracion/detalle_evento"); ?>',{
-					eCodUsuario: $("#eCodUsuario").val(),
-					eCodEvento: $("#eCodEvento").val(),
-					tEvento: $("#tEvento").val(),
-					fhFechaInicio: dateFormat($("#fhFechaInicio").val()),
-					fhFechaFinal: dateFormat($("#fhFechaFinal").val()),
-					}, 
-					function(data){
-						// respuesta
-						setTimeout(function() {
-							$('#divLogEvento').html(data);
-							$("#tblLogEvento").dataTable({
-								aaSorting: [
-									[0, 'desc']
-								]
-							});
-						}, 2000);
+                $.post('<?= site_url("Configuracion/detalle_evento"); ?>',{
+                    limit: (typeof limit !== 'undefined' ? limit : '')
+                    }, 
+                    function(data){
+                        // respuesta
+                        $('#divLogEvento').html(data);
+                        $("#tblLogEvento").dataTable({
+                            aaSorting: [ [0, 'desc'] ]
+                        });
+                        var dt = $("#tblLogEvento").DataTable();
+                        dt.column(2).visible(false);
+                    }).fail(function() { // en caso de que el POST falle
+                        $('#divLogEvento').html("<div class=\"alert alert-danger\"><strong>Error al cargar el log.</strong> Intenta de nuevo.</div>");
+                        alert("Operación fallida.");
+                });
+            }
 
-					}).fail(function() { //en caso de que el POST falle
-						alert( "Operación fallida." );
-				});
-			}
+            
 
-		</script>
+            // Carga inicial: últimos 10 registros
+            $(function(){
+                filtro_logeventos(10);
+            });
+
+            // Sin generador de datos de prueba
+
+        </script>
+
+        
 
 	</body>
 </html>

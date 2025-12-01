@@ -12,7 +12,7 @@
                 <div class="panel-body">
                     <div class="row" style="margin-bottom: 12px;">
                         <div class="col-md-12">
-                            <a href="<?= site_url('Transporte/nuevo_viaje'); ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo viaje</a>
+<a href="<?= site_url('Administracion_de_transportes/nuevo_viaje'); ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo viaje</a>
                             <?php if (isset($con_viajes) && is_array($con_viajes)) { ?>
                                 <span class="label label-default" style="margin-left:8px;"><?= count($con_viajes); ?> viaje(s)</span>
                             <?php } ?>
@@ -52,7 +52,7 @@
                                         </td>
                                         <td>
                                             <a href="<?= site_url('Transporte/editar_viaje/'.(int)$v->eCodViaje); ?>" class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> Editar tiempos</a>
-                                            <form action="<?= site_url('Transporte/estatus_viaje'); ?>" method="post" style="display:inline;" onsubmit="return confirm('¿Eliminar este viaje?');">
+                                            <form action="<?= site_url('Transporte/estatus_viaje'); ?>" method="post" style="display:inline; margin-left:8px;" onsubmit="return confirm('¿Eliminar este viaje?');">
                                                 <input type="hidden" name="eCodViaje" value="<?= (int)$v->eCodViaje; ?>" />
                                                 <input type="hidden" name="tCodEstatus" value="EL" />
                                                 <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Eliminar</button>

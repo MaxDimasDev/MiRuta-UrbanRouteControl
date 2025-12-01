@@ -51,4 +51,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Sesion';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+// Rutas legibles
+$route['Administracion_de_sistema/Logs_del_sistema'] = 'Configuracion/m1_s1';
+$route['Administracion_de_transportes/Horarios'] = 'Transporte/m4_s3';
+$route['Administracion_de_sistema/Inicio'] = 'Panel';
+$route['Administracion_de_transportes/Rutas'] = 'Transporte/m4_s1';
+$route['Administracion_de_transportes/Paradas'] = 'Transporte/m4_s2';
+$route['Administracion_de_sistema/Historial_de_eventos'] = 'Configuracion/historial_eventos';
+$route['Planear_ruta'] = 'MiRuta';
+// Alias nuevo: Vista_visitante → MiRuta
+$route['Vista_visitante'] = 'MiRuta';
+
+// Aliases solicitados
+// Eliminados alias duplicados de Inicio
+
+// Transporte/nuevo_viaje (ruta unificada)
+$route['Administracion_de_transportes/nuevo_viaje'] = 'Transporte/nuevo_viaje';
+
+// Eliminados alias duplicados de MiRuta
 ?>

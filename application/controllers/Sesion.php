@@ -284,7 +284,7 @@ class Sesion extends CI_Controller {
 
 	// Opción de visitante: redirige a MiRuta sin sesión de administrador
 	public function visitante() {
-		redirect(site_url('MiRuta'));
+        redirect(site_url('Vista_visitante'));
 	}
 
 	public function bloqueo(){

@@ -16,7 +16,7 @@
 
                     <div class="row" style="margin-bottom: 10px;">
                         <div class="col-md-12">
-                            <a href="<?php echo site_url('Transporte/m4_s1'); ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i> Volver a Rutas</a>
+    <a href="<?php echo site_url('Administracion_de_transportes/Rutas'); ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i> Volver a Rutas</a>
                         </div>
                     </div>
 

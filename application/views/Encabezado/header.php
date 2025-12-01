@@ -4,13 +4,12 @@
 <head>
 
 	<!-- Basic -->
-	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 	<meta charset="UTF-8">
     <title><?= isset($tTituloPagina) && $tTituloPagina ? $tTituloPagina . ' | MiRuta' : 'MiRuta - Administración de sistema'; ?></title>
     <meta name="application-name" content="MiRuta">
-	<meta name="keywords" content="Soluciones en tecnología, Tecnología para PyMes, tecnología para empresas, soluciones digitales para negocios, web hosting, desarrollo web, e-learning, marketing digital" />
-	<meta name="description" content="Desarrollamos soluciones tecnológicas que ayudan al éxito de las empresas en México: web hosting, desarrollo web, e-learning, marketing digital y más.">
-	<meta name="author" content="Ing. Jorge Luis Vargas Mancilla">
+	<meta name="keywords" content="Sistema de administración de rutas de transporte publico, desarrollado por la UTMA como proyecto final" />
+    <meta name="description" content="MiRuta es un sistema de administración de rutas enfocado a transporte publico desarrollado por alumnos de la UTMA para optimizar la gestión y operación de unidades.">
+    <meta name="author" content="Maximo Dimas Trejo, Montserrat Guadalupe Ramirez Esparza">
 
 	<!-- Mobile Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -60,59 +59,9 @@
 	<!-- Head Libs -->
 	<script src="<?= base_url(); ?>assets/vendor/modernizr/modernizr.js"></script>
 
-	<script type="text/javascript">
-		function bloquear() {
-			$.post('<?= site_url("Sesion/bloqueo"); ?>', {
-					bSesion: false
-				},
-				function(data) {
-					// respuesta
-				}).fail(function() { //en caso de que el POST falle
-				alert("Operación fallida.");
-			});
-		}
-
-		function desbloquear() {
-			var eError = 0;
-			var mensaje = "<div class=\"col-md-12 alert alert-danger\">";
-
-			if ($("#tPassword").val() == '') {
-				mensaje += "<span><i class=\"fa fa-times\"></i> Password vacío</span><br>";
-				eError++;
-			}
-			if (eError > 0) {
-				mensaje += "</div>";
-				$('#divRespuestaBloqueo').html(mensaje);
-				$('#divRespuestaBloqueo').slideDown(300);
-				return false;
-			} else {
-				$('#divRespuestaBloqueo').html("<div class=\"alert alert-info\"><img src=\"<?= base_url(); ?>/assets/images/loader.gif\" width=\"30px\"> <strong> Procesando informaci&oacute;n ...</strong></div>");
-				$('#divRespuestaBloqueo').slideDown(300);
-				$.post('<?= site_url("Sesion/desbloqueo"); ?>', {
-						tPassword: $("#tPassword").val()
-					},
-					function(data) {
-						// respuesta
-						$('#divRespuestaBloqueo').html(data);
-						$('#divRespuestaBloqueo').slideDown(300);
-						setTimeout(function() {
-							if ($('#eExito').val() == 1) {
-								LockScreen.hide();
-							} else {
-								$('#divRespuestaBloqueo').slideUp(300);
-							}
-						}, ($('#eExito').val() == 1 ? 3000 : 3800));
-
-					}).fail(function() { //en caso de que el POST falle
-					alert("Operación fallida.");
-				});
-			}
-		}
-
-		function cambiarusuario() {
-			window.location.href = "<?= site_url("Sesion/logout") ?>";
-		}
-	</script>
+    <script type="text/javascript">
+        // Bloqueo eliminado completamente del sistema.
+    </script>
 
 </head>
 
@@ -121,31 +70,42 @@
 
 		<!-- start: header -->
 		<header class="header">
-			<div class="logo-container">
-                <a href="<?= base_url(); ?>index.php/Panel" class="logo" title="MiRuta">
-                    <img src="<?= base_url(); ?>assets/images/header-logos.png" class="imgLogo" alt="MiRuta" />
+			<div class="logo-container" style="display:flex; align-items:center; justify-content:flex-start; width:10%;">
+        <a href="<?= site_url('Administracion_de_sistema/Inicio'); ?>" class="logo" title="MiRuta">
+                    <img src="<?= base_url(); ?>assets/images/Utma.png" class="imgLogo" alt="MiRuta" />
                 </a>
-                <span class="hidden-xs" style="margin-left:10px;font-weight:600;letter-spacing:.2px;">Administración de sistema MiRuta</span>
-				<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
-					<i class="fa fa-bars" aria-label="Toggle sidebar"></i>
-				</div>
+                <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened" style="margin-left:8px;">
+                    <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+                </div>
 			</div>
+            <div class="admin-title" style="position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); font-weight:600; font-size:20px; color:#222; letter-spacing:.2px; text-align:center;">
+        <a href="<?= site_url('Administracion_de_sistema/Inicio'); ?>" style="color:#222; text-decoration:none;">Panel de administracion de sistema MiRuta</a>
+            </div>
 
 			<!-- start: search & user box -->
-			<div class="header-right">
+            <div class="header-right" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); height:72px; display:flex; align-items:center; background:transparent;">
 
-				<span class="separator"></span>
+                <?php if (!empty($mostrar_atras_login)) { ?>
+                    <a href="<?= site_url('Sesion'); ?>" class="btn btn-default btn-sm" title="Regresar al login" style="margin-right: 10px;">
+                        <i class="fa fa-arrow-left"></i> Atrás
+                    </a>
+                <?php } ?>
 
 
-				<div id="userbox" class="userbox">
-					<a href="#" data-toggle="dropdown">
-						<figure class="profile-picture">
-							<img src="<?= ($this->session->userdata("tImagen") ? base_url() . $this->session->userdata("tImagen") : base_url() . 'assets/images/!logged-user.jpg'); ?>" alt="<?= $this->session->userdata("tNombre"); ?>" class="img-circle" data-lock-picture="<?= ($this->session->userdata("tImagen") ? base_url() . $this->session->userdata("tImagen") : base_url() . 'assets/images/!logged-user.jpg'); ?>" />
-						</figure>
-						<div class="profile-info" data-lock-name="<?= $this->session->userdata("tNombre"); ?>" data-lock-email="<?= $this->session->userdata("tCorreo"); ?>">
-							<span class="name"><?= $this->session->userdata("tNombre"); ?></span>
-							<span class="role"><?= $this->session->userdata("tPuesto"); ?></span>
-						</div>
+			<div id="userbox" class="userbox" data-fallback-picture="<?= base_url(); ?>assets/images/!logged-user.jpg" style="margin:0 12px 0 0;">
+				<a href="#" data-toggle="dropdown">
+					<figure class="profile-picture" style="margin:0 10px 0 0;">
+						<img
+							class="img-circle"
+							alt="Usuario"
+							src="<?= base_url().($this->session->userdata('tImagen') ? $this->session->userdata('tImagen') : 'assets/images/!logged-user.jpg'); ?>"
+							data-lock-picture="<?= base_url().($this->session->userdata('tImagen') ? $this->session->userdata('tImagen') : 'assets/images/!logged-user.jpg'); ?>"
+						/>
+					</figure>
+					<div class="profile-info" data-lock-name="<?= $this->session->userdata("tNombre"); ?>" data-lock-email="<?= $this->session->userdata("tCorreo"); ?>">
+						<span class="name"><?= $this->session->userdata("tNombre"); ?></span>
+						<span class="role"><?= $this->session->userdata("tPuesto"); ?></span>
+					</div>
 
 						<i class="fa custom-caret"></i>
 					</a>
@@ -157,10 +117,7 @@
 								<a role="menuitem" tabindex="-1" href="<?= site_url('Sesion/perfil'); ?>">
 									<i class="fa fa-user"></i> Mi perfil</a>
 							</li>
-							<li>
-								<a role="menuitem" tabindex="-1" data-lock-screen="true">
-									<i class="fa fa-lock"></i> Bloquear</a>
-							</li>
+                            <!-- Opción de bloqueo eliminada -->
 							<li>
 								<a role="menuitem" tabindex="-1" href="<?= site_url('Sesion/logout'); ?>">
 									<i class="fa fa-power-off"></i> Cerrar Sesión</a>

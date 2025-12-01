@@ -249,6 +249,24 @@ class Usuario extends CI_Controller {
 		$aDatos['tPuesto'] 				= ($this->input->post("tPuesto")			? $this->input->post("tPuesto") 			: NULL);
 		$aDatos['tImagen'] 				= ($this->input->post("tImagen")			? $this->input->post("tImagen") 			: NULL);
 		$aDatos['fhFechaActualizacion'] = mdate('%Y/%m/%d %H:%i:%s', time());
+
+		// Respaldo: si la tabla no existe, guardar cambio en sesión para evitar fallo
+		if (method_exists($this->db, 'table_exists') && !$this->db->table_exists('cat_usuarios')) {
+			$this->session->set_userdata('tNombre', ($aDatos['tNombre'] ?: $this->session->userdata('tNombre')));
+			$this->session->set_userdata('tCorreo', ($aDatos['tCorreo'] ?: $this->session->userdata('tCorreo')));
+			$this->session->set_userdata('tTelefono', ($aDatos['tTelefono'] ?: $this->session->userdata('tTelefono')));
+			$this->session->set_userdata('tUsuario', ($aDatos['tUsuario'] ?: $this->session->userdata('tUsuario')));
+			$this->session->set_userdata('tPuesto', ($aDatos['tPuesto'] ?: $this->session->userdata('tPuesto')));
+			$this->session->set_userdata('tImagen', ($aDatos['tImagen'] ?: $this->session->userdata('tImagen')));
+			$this->session->set_userdata('eCodEmpresa', ($aDatos['eCodEmpresa'] ?: $this->session->userdata('eCodEmpresa')));
+			$this->session->set_userdata('eCodPerfil', ($aDatos['eCodPerfil'] ?: $this->session->userdata('eCodPerfil')));
+			$this->session->set_userdata('eCodDepartamento', ($aDatos['eCodDepartamento'] ?: $this->session->userdata('eCodDepartamento')));
+
+			echo "<input type=\"hidden\" id=\"eCodUsuario\" name=\"eCodUsuario\" value=\"".$this->session->userdata('eCodUsuario')."\">";
+			echo "<input type=\"hidden\" id=\"eExito\" name=\"eExito\" value=\"1\">";
+			echo "<div class=\"alert alert-success\"><strong><i class=\"fa fa-check\"></i> Perfil actualizado,</strong> cambios guardados en sesión</div>";
+			return;
+		}
 		
 		$aRes = $this->catinserts_m->upd_usuario($aDatos);
 

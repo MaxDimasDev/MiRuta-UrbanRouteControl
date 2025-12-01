@@ -43,28 +43,28 @@ a:active {
 
 /* Layout Base - Header */
 .header {
-	height: 60px;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
+    height: 72px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .logo-container {
 	width: 60%;
 }
 .imgLogo{
-	width: 100%;
-	height: 45px;
+    width: 100%;
+    height: 56px;
 }
 /* Layout Base - Inner Wrapper */
 .inner-wrapper {
-	display: table;
-	min-height: 100vh;
-	padding-top: 60px;
-	table-layout: fixed;
-	overflow: hidden;
-	width: 100%;
+    display: table;
+    min-height: 100vh;
+    padding-top: 72px;
+    table-layout: fixed;
+    overflow: hidden;
+    width: 100%;
 }
 
 /* Layout Base - Content Body */
@@ -374,10 +374,10 @@ a:active {
 
 	.header .header-right {
 		background: #FFF;
-		float: none !important;
-		height: 60px;
-		margin-top: 60px;
-		width: 100%;
+		float: right !important;
+		height: 72px;
+		margin-top: 0;
+		width: auto;
 	}
 
 	.inner-wrapper {
@@ -1463,8 +1463,8 @@ html.fixed .visible-xl-inline-block {
 }
 
 .header-right {
-	float: right;
-	height: 56px;
+    float: right;
+    height: 72px;
 }
 
 /* Header Mobile */
@@ -1472,10 +1472,10 @@ html.fixed .visible-xl-inline-block {
 	.logo-container {
 		width: 100%;
 	}
-	.imgLogo{
-		width: 85%;
-		height: 20px;
-	}
+    .imgLogo{
+        width: 85%;
+        height: 26px;
+    }
 	.header {
 		background-color: #f6f6f6;
 		background-image: -webkit-linear-gradient(#f6f6f6 0%, white 45%);
@@ -5286,14 +5286,8 @@ html.header-dark .notifications > li .notification-icon i {
 	}
 
 	.userbox:after {
-		background: #E9E9E6;
-		content: '';
-		height: 63px;
-		margin: 0;
-		position: absolute;
-		right: -21px;
-		top: -18px;
-		width: 1px;
+		display: none;
+		content: none;
 	}
 
 	.userbox .profile-picture {

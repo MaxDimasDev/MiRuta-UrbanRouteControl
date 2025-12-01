@@ -13,9 +13,7 @@ class MiRuta extends CI_Controller {
         $data['tTituloPagina'] = 'MiRuta - Planear ruta';
         $data['con_paradas']   = $this->Transporte_m->con_paradas(false, false, 'AC');
         $data['con_rutas']     = $this->Transporte_m->con_rutas(false, 'AC');
-
-        $this->load->view('Encabezado/header', $data);
-        // Nota: no cargamos menú para vista pública
+        // Vista pública autónoma: solo cargamos la vista independiente
         $this->load->view('Principal/miruta', $data);
     }
 

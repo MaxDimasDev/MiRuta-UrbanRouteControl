@@ -12,12 +12,30 @@
 
 					<!-- start: page -->
 					<section class="panel">
-						<header class="panel-heading">
-							<div class="panel-actions">
-							</div>
-							<h2 class="panel-title">Mi Perfil</h2>
-						</header>
-						<div class="panel-body">
+					<header class="panel-heading">
+						<div class="panel-actions">
+						</div>
+						<h2 class="panel-title">Mi Perfil</h2>
+					</header>
+					<div class="panel-body">
+                    <?php
+                        // Si no hay registros en $con_usuarios, construir uno básico con datos de sesión
+                        if (empty($con_usuarios)) {
+                            $cu = (object) array(
+                                'eCodUsuario'      => ($this->session->userdata('eCodUsuario') ?: 0),
+                                'eCodEmpresa'      => ($this->session->userdata('eCodEmpresa') ?: 0),
+                                'eCodDepartamento' => ($this->session->userdata('eCodDepartamento') ?: 0),
+                                'eCodPerfil'       => ($this->session->userdata('eCodPerfil') ?: 0),
+                                'tImagen'          => ($this->session->userdata('tImagen') ?: ''),
+                                'tNombre'          => ($this->session->userdata('tNombre') ?: 'Usuario'),
+                                'tPuesto'          => ($this->session->userdata('tPuesto') ?: ''),
+                                'tCorreo'          => ($this->session->userdata('tCorreo') ?: ''),
+                                'tUsuario'         => ($this->session->userdata('tUsuario') ?: ''),
+                                'tTelefono'        => ($this->session->userdata('tTelefono') ?: '')
+                            );
+                            $con_usuarios = array($cu);
+                        }
+                    ?>
 					<?php foreach ($con_usuarios as $cu) { ?>
 
 							<input type="hidden" id="eCodUsuario" name="eCodUsuario" value="<?= $cu->eCodUsuario;?>">
@@ -25,16 +43,16 @@
 							<input type="hidden" id="eCodDepartamento" name="eCodDepartamento" value="<?= $cu->eCodDepartamento;?>">
 							<input type="hidden" id="eCodPerfil" name="eCodPerfil" value="<?= $cu->eCodPerfil;?>">
 
-							<div class="row">
-								<div class="col-sm-3">
-									<div class="thumb-info mb-md">
-										<img id="imgPerfil" src="<?= base_url().($cu->tImagen ? $cu->tImagen : 'assets/images/!logged-user.jpg');?>" class="rounded img-responsive">
-										<div class="thumb-info-title">
-											<span id="txtNombre" class="thumb-info-inner"><?= $cu->tNombre;?></span>
-											<span id="txtPuesto" class="thumb-info-type"><?= $cu->tPuesto;?></span>
-										</div>
-									</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="thumb-info mb-md">
+									<img id="imgPerfil" src="<?= base_url().($cu->tImagen ? $cu->tImagen : 'assets/images/!logged-user.jpg');?>" class="rounded img-responsive">
 								</div>
+								<div class="mt-sm">
+									<span id="txtNombre" class="label label-dark" style="margin-right:6px;"><?= $cu->tNombre;?></span>
+									<span id="txtPuesto" class="label label-success"><?= $cu->tPuesto;?></span>
+								</div>
+							</div>
 								<div class="col-sm-9">
 									<div class="row">
 										<div class="col-sm-12">
@@ -74,12 +92,12 @@
 												<input type="text" id="tCorreo" name="tCorreo" class="form-control" value="<?= $cu->tCorreo;?>">
 											</div>
 										</div>
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label class="control-label" style="padding: 3px;">Usuario</label>
-												<input type="txt" name="tUsuario" id="tUsuario" class="form-control" value="<?= $cu->tUsuario;?>">
-											</div>
-										</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label class="control-label" style="padding: 3px;">Usuario</label>
+										<input type="text" name="tUsuario" id="tUsuario" class="form-control" value="<?= $cu->tUsuario;?>">
+									</div>
+								</div>
 									</div>
 									<div class="row">
 										<div class="col-sm-6">
@@ -255,7 +273,7 @@
 							$('#divRespuestaActualizar').html(data); $('#divRespuestaActualizar').slideDown(300);
 							setTimeout(function() {
 								if ($('#eExito').val()==1){
-									window.location.href = "<?= site_url('Panel'); ?>";
+        window.location.href = "<?= site_url('Administracion_de_sistema/Inicio'); ?>";
 								}else{
 									$('#divRespuestaActualizar').slideUp(300);
 									$(oObjeto).prop('disabled', false);

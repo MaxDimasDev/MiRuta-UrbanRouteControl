@@ -33,7 +33,9 @@ class Configuraciones_m extends CI_Model {
         $tSelect = " SELECT ".
             ($hasUsers ? " cu.tNombre as tUsuario, " : " '' as tUsuario, ").
             " ple.eCodEvento, ple.tEvento, ";
-        $tSelect .= ($hasEvents ? " ce.tNombre as tTipoEvento, ce.tNombreCorto as tTipoEventoCorto, ce.tIcono as tIconoEvento, " : " '' as tTipoEvento, '' as tTipoEventoCorto, '' as tIconoEvento, ");
+        // Algunas instalaciones no tienen columnas tNombreCorto/tIcono en cat_eventos.
+        // Usamos tNombre como corto y omitimos icono para evitar errores.
+        $tSelect .= ($hasEvents ? " ce.tNombre as tTipoEvento, ce.tNombre as tTipoEventoCorto, '' as tIconoEvento, " : " '' as tTipoEvento, '' as tTipoEventoCorto, '' as tIconoEvento, ");
         $tSelect .= " DATE_FORMAT(ple.fhFechaRegistro,'%d/%m/%Y %H:%i:%s') as fhFechaRegistro ";
 
         $tFrom = " FROM pro_logseventos ple ";
@@ -48,7 +50,15 @@ class Configuraciones_m extends CI_Model {
 
         $tOrder = " ORDER BY ple.eCodLogEvento DESC ";
 
-        $tQuery = $tSelect.$tFrom.$tWhere.$tOrder;
+        // Optional limit
+        $tLimit = "";
+        if (isset($aFiltro['limit'])) {
+            $limit = (int)$aFiltro['limit'];
+            if ($limit > 0) {
+                $tLimit = " LIMIT " . $limit;
+            }
+        }
+        $tQuery = $tSelect.$tFrom.$tWhere.$tOrder.$tLimit;
 
         $query = $this->db->query($tQuery);
         if ($query->num_rows()>0) {

@@ -67,14 +67,21 @@ class Catalogos_m extends CI_Model {
     }
 
     public function con_empresas(){
-        $query = $this->db->query(  " SELECT ce.*, ces.tNombre as tEstatus ".
-                                    " FROM cat_empresas ce ".
-                                        " LEFT JOIN cat_estatus ces ON ces.tCodEstatus = ce.tCodEstatus ".
-                                    " WHERE ce.tCodEstatus = 'AC' "
-                                );
-        if($query->num_rows() > 0 ){
+        // Evitar error si la tabla no existe en el entorno actual
+        if (method_exists($this->db, 'table_exists') && !$this->db->table_exists('cat_empresas')) {
+            return array();
+        }
+
+        $query = $this->db->query(
+            " SELECT ce.*, ces.tNombre as tEstatus " .
+            " FROM cat_empresas ce " .
+            " LEFT JOIN cat_estatus ces ON ces.tCodEstatus = ce.tCodEstatus " .
+            " WHERE ce.tCodEstatus = 'AC' "
+        );
+        if ($query->num_rows() > 0) {
             return $query->result();
         }
+        return array();
     }
 
     public function con_tipositems($eCodTipoItem = false) {
@@ -91,6 +98,10 @@ class Catalogos_m extends CI_Model {
         }
 
     public function con_departamentos(){
+        // Evitar error si la tabla no existe en el entorno actual
+        if (method_exists($this->db, 'table_exists') && !$this->db->table_exists('cat_departamentos')) {
+            return array();
+        }
         $tQuery = " SELECT cat_departamentos.*, cat_estatus.tNombre as tEstatus ".
                     " FROM cat_departamentos".
                     " LEFT JOIN cat_estatus ON cat_estatus.tCodEstatus = cat_departamentos.tCodEstatus ".
@@ -100,6 +111,7 @@ class Catalogos_m extends CI_Model {
         if($query->num_rows() > 0 ){
             return $query->result();
         }
+        return array();
     }
 
     public function con_direccionesgenerales(){

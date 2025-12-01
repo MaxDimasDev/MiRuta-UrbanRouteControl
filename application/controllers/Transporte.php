@@ -10,6 +10,7 @@ class Transporte extends CI_Controller {
         $this->load->model('secciones_m');
         $this->load->model('catalogos_m');
         $this->load->model('transporte_m');
+        $this->load->model('inserts_m');
         $this->load->helper('date_helper');
         date_default_timezone_set('America/Mexico_City');
     }
@@ -152,7 +153,8 @@ class Transporte extends CI_Controller {
         $data['con_seccion']   = $this->secciones_m->con_secciones(false, false, 'm4_s3');
         $data['con_menu']      = $this->secciones_m->con_menu($this->session->userdata('eCodPerfil'));
         $data['con_permisos']  = $this->secciones_m->con_perfilpermiso($this->session->userdata('eCodPerfil'), 'm4_s3');
-        $data['con_viajes']    = $this->transporte_m->con_viajes();
+        // Solo mostrar viajes activos en el listado
+        $data['con_viajes']    = $this->transporte_m->con_viajes(false, false, false, 'AC');
 
         $this->load->view('Encabezado/header', $data);
         $this->load->view('Encabezado/menu');
@@ -183,7 +185,7 @@ class Transporte extends CI_Controller {
 
         if (!$eCodRuta || !$eCodServicio) {
             $this->session->set_flashdata('mensaje', 'Error: Ruta y servicio son requeridos.');
-            redirect('Transporte/nuevo_viaje');
+        redirect('Administracion_de_transportes/nuevo_viaje');
             return;
         }
 
@@ -336,6 +338,13 @@ class Transporte extends CI_Controller {
             'dLongitud'  => (float)$dLongitud,
             'tCodEstatus'=> 'AC'
         ));
+        if (!empty($aRes['eExito'])) {
+            // eCodEvento 3: Alta de parada (creación/actualización)
+            $this->inserts_m->ins_log(array(
+                'eCodEvento' => 3,
+                'tEvento'    => 'Parada creada: ' . $tNombre . ' (ID: ' . $aRes['eCodParada'] . ')'
+            ));
+        }
         $this->session->set_flashdata('mensaje', $aRes['eExito'] ? 'Parada guardada correctamente.' : 'Error al guardar la parada.');
         redirect('Transporte/m4_s2');
     }
@@ -362,6 +371,13 @@ class Transporte extends CI_Controller {
             'dLatitud'   => (float)$dLatitud,
             'dLongitud'  => (float)$dLongitud
         ));
+        if (!empty($aRes['eExito'])) {
+            // eCodEvento 3: Alta de parada (creación/actualización)
+            $this->inserts_m->ins_log(array(
+                'eCodEvento' => 3,
+                'tEvento'    => 'Parada actualizada: ' . $tNombre . ' (ID: ' . $eCodParada . ')'
+            ));
+        }
         $this->session->set_flashdata('mensaje', $aRes['eExito'] ? 'Parada actualizada.' : 'Error al actualizar la parada.');
         redirect('Transporte/m4_s2');
     }
@@ -374,6 +390,19 @@ class Transporte extends CI_Controller {
             'eCodParada' => $eCodParada,
             'tCodEstatus'=> $tCodEstatus
         ));
+        if (!empty($aRes['eExito'])) {
+            // Obtener nombre de la parada para el mensaje
+            $aParada = $this->transporte_m->con_paradas($eCodParada);
+            $tNombreParada = (is_array($aParada) && count($aParada)>0) ? $aParada[0]->tNombre : ('Parada '.$eCodParada);
+            $tMensaje = ($tCodEstatus === 'EL')
+                ? ('Parada eliminada: ' . $tNombreParada . ' (ID: ' . $eCodParada . ')')
+                : ('Parada estatus actualizado a ' . $tCodEstatus . ': ' . $tNombreParada . ' (ID: ' . $eCodParada . ')');
+            // eCodEvento 3: Alta/actualización de parada (también usamos para cambios de estatus)
+            $this->inserts_m->ins_log(array(
+                'eCodEvento' => 3,
+                'tEvento'    => $tMensaje
+            ));
+        }
         $this->session->set_flashdata('mensaje', $aRes['eExito'] ? 'Estatus de parada actualizado.' : 'Error al actualizar estatus de parada.');
         redirect('Transporte/m4_s2');
     }
