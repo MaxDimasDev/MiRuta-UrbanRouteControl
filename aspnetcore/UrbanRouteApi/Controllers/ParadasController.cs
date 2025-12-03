@@ -28,5 +28,17 @@ public sealed class ParadasController : ControllerBase
         var paradas = await conn.QueryAsync<ParadaDto>(sql);
         return Ok(paradas);
     }
-}
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ParadaDto>> GetById(int id)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string sql = @"SELECT eCodParada, tNombre, tDireccion, tSentido, dLatitud, dLongitud
+                             FROM cat_paradas
+                             WHERE eCodParada = @ParadaId AND tCodEstatus = 'AC'";
+
+        var parada = await conn.QueryFirstOrDefaultAsync<ParadaDto>(sql, new { ParadaId = id });
+        if (parada is null) return NotFound();
+        return Ok(parada);
+    }
+}
