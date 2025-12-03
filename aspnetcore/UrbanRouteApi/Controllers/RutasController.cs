@@ -55,4 +55,18 @@ public sealed class RutasController : ControllerBase
         var viajes = await conn.QueryAsync<RutaViajeDto>(sql, new { RutaId = id });
         return Ok(viajes);
     }
+
+    [HttpGet("{id}/forma")]
+    public async Task<ActionResult<RutaFormaDto>> GetFormaPorRuta(int id)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string sql = @"SELECT eCodFormaRuta, eCodRuta, tPolyline
+                             FROM cat_formasruta
+                             WHERE eCodRuta = @RutaId AND tCodEstatus = 'AC'
+                             ORDER BY eCodFormaRuta ASC";
+
+        var forma = await conn.QueryFirstOrDefaultAsync<RutaFormaDto>(sql, new { RutaId = id });
+        if (forma is null) return NotFound();
+        return Ok(forma);
+    }
 }
