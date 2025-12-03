@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UrbanRouteApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+34c26068297b5cc220deba1c10ea5dec089ad0dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9910a453bacdc6f2b00205b54bfbefbcf7af98f7")]
 [assembly: System.Reflection.AssemblyProductAttribute("UrbanRouteApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UrbanRouteApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

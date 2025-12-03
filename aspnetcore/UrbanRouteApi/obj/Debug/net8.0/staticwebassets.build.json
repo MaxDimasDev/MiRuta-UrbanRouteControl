@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "JlMguvC1pn+WAqlH4V8FXLPTt+n3QPL4wvRsMdgKmQg=",
-  "Source": "UrbanRouteApi",
-  "BasePath": "_content/UrbanRouteApi",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"sN2y1XtEUu/YUM1b+f/S1Xwp4C7ffTAefgN6Ng5Wce4=","Source":"UrbanRouteApi","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

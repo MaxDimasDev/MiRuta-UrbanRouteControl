@@ -24,11 +24,6 @@ C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\UrbanRo
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\UrbanRouteApi.sourcelink.json
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets.build.json
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets.development.json
-C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets\msbuild.UrbanRouteApi.Microsoft.AspNetCore.StaticWebAssets.props
-C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets\msbuild.build.UrbanRouteApi.props
-C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.UrbanRouteApi.props
-C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.UrbanRouteApi.props
-C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets.pack.json
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\scopedcss\bundle\UrbanRouteApi.styles.css
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\UrbanRou.BC1FF312.Up2Date
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\UrbanRouteApi.dll
@@ -36,3 +31,11 @@ C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\refint\
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\UrbanRouteApi.pdb
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\UrbanRouteApi.genruntimeconfig.cache
 C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\ref\UrbanRouteApi.dll
+C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\bin\Debug\net8.0\UrbanRouteApi.staticwebassets.endpoints.json
+C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\xampp\htdocs\utma-academico\aspnetcore\UrbanRouteApi\obj\Debug\net8.0\swae.build.ex.cache
