@@ -16,6 +16,19 @@ public sealed class ViajesController : ControllerBase
         _dbFactory = dbFactory;
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<RutaViajeDto>> GetById(int id)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string sql = @"SELECT eCodViaje, eCodRuta, eCodServicio, tNombre, tSentido
+                             FROM pro_viajes
+                             WHERE eCodViaje = @ViajeId AND tCodEstatus = 'AC'";
+
+        var viaje = await conn.QueryFirstOrDefaultAsync<RutaViajeDto>(sql, new { ViajeId = id });
+        if (viaje is null) return NotFound();
+        return Ok(viaje);
+    }
+
     [HttpGet("{id}/tiempos")]
     public async Task<ActionResult<IEnumerable<ViajeTiempoDto>>> GetTiemposPorViaje(int id)
     {
@@ -31,4 +44,3 @@ public sealed class ViajesController : ControllerBase
         return Ok(tiempos);
     }
 }
-

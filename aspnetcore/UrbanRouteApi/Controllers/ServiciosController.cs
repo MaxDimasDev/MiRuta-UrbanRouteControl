@@ -30,5 +30,19 @@ public sealed class ServiciosController : ControllerBase
         var servicios = await conn.QueryAsync<ServicioDto>(sql);
         return Ok(servicios);
     }
-}
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ServicioDto>> GetById(int id)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string sql = @"SELECT eCodServicio, tNombre,
+                                     bLunes, bMartes, bMiercoles, bJueves, bViernes, bSabado, bDomingo,
+                                     fhFechaInicio, fhFechaFinal
+                              FROM pro_servicios
+                              WHERE eCodServicio = @ServicioId AND tCodEstatus = 'AC'";
+
+        var servicio = await conn.QueryFirstOrDefaultAsync<ServicioDto>(sql, new { ServicioId = id });
+        if (servicio is null) return NotFound();
+        return Ok(servicio);
+    }
+}
