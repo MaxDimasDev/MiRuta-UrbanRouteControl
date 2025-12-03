@@ -16,6 +16,48 @@ public sealed class ViajesController : ControllerBase
         _dbFactory = dbFactory;
     }
 
+    [HttpPost]
+    public async Task<ActionResult<RutaViajeDto>> Create([FromBody] CreateViajeRequest req)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string ins = @"INSERT INTO pro_viajes (eCodRuta, eCodServicio, tNombre, tSentido, tCodEstatus)
+                             VALUES (@eCodRuta, @eCodServicio, @tNombre, @tSentido, 'AC');
+                             SELECT LAST_INSERT_ID();";
+        var id = await conn.QuerySingleAsync<int>(ins, req);
+        const string sel = @"SELECT eCodViaje, eCodRuta, eCodServicio, tNombre, tSentido
+                             FROM pro_viajes WHERE eCodViaje=@id";
+        var created = await conn.QueryFirstAsync<RutaViajeDto>(sel, new { id });
+        return Created($"/api/viajes/{id}", created);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<RutaViajeDto>> Update(int id, [FromBody] UpdateViajeRequest req)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string upd = @"UPDATE pro_viajes SET
+                               eCodRuta = COALESCE(@eCodRuta, eCodRuta),
+                               eCodServicio = COALESCE(@eCodServicio, eCodServicio),
+                               tNombre = COALESCE(@tNombre, tNombre),
+                               tSentido = COALESCE(@tSentido, tSentido)
+                             WHERE eCodViaje=@id AND tCodEstatus='AC'";
+        var rows = await conn.ExecuteAsync(upd, new { id, req.eCodRuta, req.eCodServicio, req.tNombre, req.tSentido });
+        if (rows == 0) return NotFound();
+        const string sel = @"SELECT eCodViaje, eCodRuta, eCodServicio, tNombre, tSentido
+                             FROM pro_viajes WHERE eCodViaje=@id";
+        var updated = await conn.QueryFirstAsync<RutaViajeDto>(sel, new { id });
+        return Ok(updated);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string del = @"UPDATE pro_viajes SET tCodEstatus='EL' WHERE eCodViaje=@id AND tCodEstatus='AC'";
+        var rows = await conn.ExecuteAsync(del, new { id });
+        if (rows == 0) return NotFound();
+        return NoContent();
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<RutaViajeDto>> GetById(int id)
     {

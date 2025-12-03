@@ -41,4 +41,46 @@ public sealed class ParadasController : ControllerBase
         if (parada is null) return NotFound();
         return Ok(parada);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<ParadaDto>> Create([FromBody] CreateParadaRequest req)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string ins = @"INSERT INTO cat_paradas (tNombre, tDireccion, tSentido, dLatitud, dLongitud, tCodEstatus, fhFechaRegistro)
+                             VALUES (@tNombre, @tDireccion, @tSentido, @dLatitud, @dLongitud, 'AC', NOW());
+                             SELECT LAST_INSERT_ID();";
+        var id = await conn.QuerySingleAsync<int>(ins, req);
+        const string sel = @"SELECT eCodParada, tNombre, tDireccion, tSentido, dLatitud, dLongitud FROM cat_paradas WHERE eCodParada=@id";
+        var created = await conn.QueryFirstAsync<ParadaDto>(sel, new { id });
+        return Created($"/api/paradas/{id}", created);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<ParadaDto>> Update(int id, [FromBody] UpdateParadaRequest req)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string upd = @"UPDATE cat_paradas SET
+                               tNombre   = COALESCE(@tNombre, tNombre),
+                               tDireccion= COALESCE(@tDireccion, tDireccion),
+                               tSentido  = COALESCE(@tSentido, tSentido),
+                               dLatitud  = COALESCE(@dLatitud, dLatitud),
+                               dLongitud = COALESCE(@dLongitud, dLongitud),
+                               fhFechaActualizacion = NOW()
+                             WHERE eCodParada=@id AND tCodEstatus='AC'";
+        var rows = await conn.ExecuteAsync(upd, new { id, req.tNombre, req.tDireccion, req.tSentido, req.dLatitud, req.dLongitud });
+        if (rows == 0) return NotFound();
+        const string sel = @"SELECT eCodParada, tNombre, tDireccion, tSentido, dLatitud, dLongitud FROM cat_paradas WHERE eCodParada=@id";
+        var updated = await conn.QueryFirstAsync<ParadaDto>(sel, new { id });
+        return Ok(updated);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        using IDbConnection conn = _dbFactory.CreateConnection();
+        const string del = @"UPDATE cat_paradas SET tCodEstatus='EL', fhFechaActualizacion=NOW() WHERE eCodParada=@id AND tCodEstatus='AC'";
+        var rows = await conn.ExecuteAsync(del, new { id });
+        if (rows == 0) return NotFound();
+        return NoContent();
+    }
 }
