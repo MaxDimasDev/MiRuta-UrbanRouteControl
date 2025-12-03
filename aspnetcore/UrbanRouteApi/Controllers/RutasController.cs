@@ -86,6 +86,8 @@ public sealed class RutasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<RutaDto>> Create([FromBody] CreateRutaRequest req)
     {
+        if (!FeatureFlags.AllowCreationAndDeletion)
+            return StatusCode(405, "Operación deshabilitada durante la migración: no crear nuevas rutas.");
         using IDbConnection conn = _dbFactory.CreateConnection();
         const string sql = @"INSERT INTO cat_rutas (tNombre, tCodigo, tColor, tSentido, tCodEstatus, fhFechaRegistro)
                              VALUES (@tNombre, @tCodigo, @tColor, @tSentido, 'AC', NOW());
@@ -121,6 +123,8 @@ public sealed class RutasController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        if (!FeatureFlags.AllowCreationAndDeletion)
+            return StatusCode(405, "Operación deshabilitada durante la migración: no eliminar rutas existentes.");
         using IDbConnection conn = _dbFactory.CreateConnection();
         const string del = @"UPDATE cat_rutas SET tCodEstatus='EL', fhFechaActualizacion=NOW() WHERE eCodRuta=@id AND tCodEstatus='AC'";
         var rows = await conn.ExecuteAsync(del, new { id });

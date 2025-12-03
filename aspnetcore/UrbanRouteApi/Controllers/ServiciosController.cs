@@ -49,6 +49,8 @@ public sealed class ServiciosController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ServicioDto>> Create([FromBody] CreateServicioRequest req)
     {
+        if (!FeatureFlags.AllowCreationAndDeletion)
+            return StatusCode(405, "Operación deshabilitada durante la migración: no crear nuevos servicios.");
         using IDbConnection conn = _dbFactory.CreateConnection();
         const string ins = @"INSERT INTO pro_servicios (tNombre,
                               bLunes,bMartes,bMiercoles,bJueves,bViernes,bSabado,bDomingo,
@@ -107,6 +109,8 @@ public sealed class ServiciosController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        if (!FeatureFlags.AllowCreationAndDeletion)
+            return StatusCode(405, "Operación deshabilitada durante la migración: no eliminar servicios existentes.");
         using IDbConnection conn = _dbFactory.CreateConnection();
         const string del = @"UPDATE pro_servicios SET tCodEstatus='EL' WHERE eCodServicio=@id AND tCodEstatus='AC'";
         var rows = await conn.ExecuteAsync(del, new { id });

@@ -45,6 +45,8 @@ public sealed class ParadasController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ParadaDto>> Create([FromBody] CreateParadaRequest req)
     {
+        if (!FeatureFlags.AllowCreationAndDeletion)
+            return StatusCode(405, "Operación deshabilitada durante la migración: no crear nuevas paradas.");
         using IDbConnection conn = _dbFactory.CreateConnection();
         const string ins = @"INSERT INTO cat_paradas (tNombre, tDireccion, tSentido, dLatitud, dLongitud, tCodEstatus, fhFechaRegistro)
                              VALUES (@tNombre, @tDireccion, @tSentido, @dLatitud, @dLongitud, 'AC', NOW());
@@ -77,6 +79,8 @@ public sealed class ParadasController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        if (!FeatureFlags.AllowCreationAndDeletion)
+            return StatusCode(405, "Operación deshabilitada durante la migración: no eliminar paradas existentes.");
         using IDbConnection conn = _dbFactory.CreateConnection();
         const string del = @"UPDATE cat_paradas SET tCodEstatus='EL', fhFechaActualizacion=NOW() WHERE eCodParada=@id AND tCodEstatus='AC'";
         var rows = await conn.ExecuteAsync(del, new { id });

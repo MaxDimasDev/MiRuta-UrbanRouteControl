@@ -19,6 +19,8 @@ public sealed class ViajesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<RutaViajeDto>> Create([FromBody] CreateViajeRequest req)
     {
+        if (!FeatureFlags.AllowCreationAndDeletion)
+            return StatusCode(405, "Operación deshabilitada durante la migración: no crear nuevos viajes.");
         using IDbConnection conn = _dbFactory.CreateConnection();
         const string ins = @"INSERT INTO pro_viajes (eCodRuta, eCodServicio, tNombre, tSentido, tCodEstatus)
                              VALUES (@eCodRuta, @eCodServicio, @tNombre, @tSentido, 'AC');
@@ -51,6 +53,8 @@ public sealed class ViajesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        if (!FeatureFlags.AllowCreationAndDeletion)
+            return StatusCode(405, "Operación deshabilitada durante la migración: no eliminar viajes existentes.");
         using IDbConnection conn = _dbFactory.CreateConnection();
         const string del = @"UPDATE pro_viajes SET tCodEstatus='EL' WHERE eCodViaje=@id AND tCodEstatus='AC'";
         var rows = await conn.ExecuteAsync(del, new { id });
