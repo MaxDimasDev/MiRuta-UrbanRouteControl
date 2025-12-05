@@ -1,0 +1,203 @@
+{
+  "info": {
+    "name": "UrbanRouteApi",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Colección para probar UrbanRouteApi: respuestas 200/400/405 con ejemplos válidos e inválidos. Usa {{baseUrl}} = http://localhost:5299"
+  },
+  "item": [
+    {
+      "name": "Rutas",
+      "description": "Endpoints de rutas",
+      "item": [
+        {"name": "GET /api/rutas (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/rutas","host": ["{{baseUrl}}"],"path": ["api","rutas"]}}},
+        {"name": "GET /api/rutas/{id} (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/rutas/1","host": ["{{baseUrl}}"],"path": ["api","rutas","1"]}}},
+        {"name": "GET /api/rutas/{id}/paradas (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/rutas/1/paradas","host": ["{{baseUrl}}"],"path": ["api","rutas","1","paradas"]}}},
+        {"name": "GET /api/rutas/{id}/viajes (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/rutas/1/viajes","host": ["{{baseUrl}}"],"path": ["api","rutas","1","viajes"]}}},
+        {"name": "GET /api/rutas/{id}/forma (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/rutas/1/forma","host": ["{{baseUrl}}"],"path": ["api","rutas","1","forma"]}}},
+        {
+          "name": "PATCH /api/rutas/{id} válido (200)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Ruta Centro\",\n  \"tColor\": \"#FF6600\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/rutas/1","host": ["{{baseUrl}}"],"path": ["api","rutas","1"]}
+          },
+          "description": "Actualiza nombre y color. Esperado: 200"
+        },
+        {
+          "name": "PATCH /api/rutas/{id} inválido (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": 123\n}"},
+            "url": {"raw": "{{baseUrl}}/api/rutas/1","host": ["{{baseUrl}}"],"path": ["api","rutas","1"]}
+          },
+          "description": "Tipo inválido (tNombre numérico). Esperado: 400"
+        },
+        {
+          "name": "POST /api/rutas válido (201/405)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Ruta Norte\",\n  \"tCodigo\": \"RN-01\",\n  \"tColor\": \"#00AAFF\",\n  \"tSentido\": \"I\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/rutas","host": ["{{baseUrl}}"],"path": ["api","rutas"]}
+          },
+          "description": "Esperado: 201 si bandera habilitada; 405 si deshabilitada"
+        },
+        {"name": "DELETE /api/rutas/{id} (405/204)","request": {"method": "DELETE","url": {"raw": "{{baseUrl}}/api/rutas/1","host": ["{{baseUrl}}"],"path": ["api","rutas","1"]}},"description": "Esperado: 405 si bandera deshabilitada; 204 si habilitada y existe"}
+      ]
+    },
+    {
+      "name": "Paradas",
+      "description": "Endpoints de paradas",
+      "item": [
+        {"name": "GET /api/paradas (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/paradas","host": ["{{baseUrl}}"],"path": ["api","paradas"]}}},
+        {"name": "GET /api/paradas/{id} (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/paradas/1","host": ["{{baseUrl}}"],"path": ["api","paradas","1"]}}},
+        {
+          "name": "PATCH /api/paradas/{id} válido (200)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Parada Central\",\n  \"dLatitud\": 19.43,\n  \"dLongitud\": -99.13\n}"},
+            "url": {"raw": "{{baseUrl}}/api/paradas/1","host": ["{{baseUrl}}"],"path": ["api","paradas","1"]}
+          },
+          "description": "Actualiza nombre y coordenadas. Esperado: 200"
+        },
+        {
+          "name": "PATCH /api/paradas/{id} inválido (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"dLatitud\": \"norte\",\n  \"dLongitud\": \"oeste\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/paradas/1","host": ["{{baseUrl}}"],"path": ["api","paradas","1"]}
+          },
+          "description": "Tipos inválidos en lat/long. Esperado: 400"
+        },
+        {
+          "name": "POST /api/paradas válido (201/405)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Parada Norte\",\n  \"tDireccion\": \"Av. Reforma 100\",\n  \"tSentido\": \"I\",\n  \"dLatitud\": 19.4326,\n  \"dLongitud\": -99.1332\n}"},
+            "url": {"raw": "{{baseUrl}}/api/paradas","host": ["{{baseUrl}}"],"path": ["api","paradas"]}
+          },
+          "description": "Esperado: 201 si bandera habilitada; 405 si deshabilitada"
+        },
+        {
+          "name": "POST /api/paradas inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Parada Invalida\",\n  \"dLatitud\": \"norte\",\n  \"dLongitud\": \"oeste\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/paradas","host": ["{{baseUrl}}"],"path": ["api","paradas"]}
+          },
+          "description": "Tipos inválidos en lat/long. Esperado: 400"
+        },
+        {"name": "DELETE /api/paradas/{id} (405/204)","request": {"method": "DELETE","url": {"raw": "{{baseUrl}}/api/paradas/1","host": ["{{baseUrl}}"],"path": ["api","paradas","1"]}},"description": "Esperado: 405 si bandera deshabilitada; 204 si habilitada y existe"}
+      ]
+    },
+    {
+      "name": "Servicios",
+      "description": "Endpoints de servicios",
+      "item": [
+        {"name": "GET /api/servicios (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/servicios","host": ["{{baseUrl}}"],"path": ["api","servicios"]}}},
+        {"name": "GET /api/servicios/{id} (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/servicios/1","host": ["{{baseUrl}}"],"path": ["api","servicios","1"]}}},
+        {
+          "name": "PATCH /api/servicios/{id} válido (200)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Servicio Lectivo\",\n  \"bSabado\": true,\n  \"fhFechaFinal\": \"2025-12-31T00:00:00Z\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/servicios/1","host": ["{{baseUrl}}"],"path": ["api","servicios","1"]}
+          },
+          "description": "Actualiza nombre, sábado y fecha final. Esperado: 200"
+        },
+        {
+          "name": "PATCH /api/servicios/{id} inválido (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"fhFechaInicio\": \"no-fecha\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/servicios/1","host": ["{{baseUrl}}"],"path": ["api","servicios","1"]}
+          },
+          "description": "Fecha inválida. Esperado: 400"
+        },
+        {
+          "name": "POST /api/servicios válido (201/405)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Servicio Regular\",\n  \"bLunes\": true,\n  \"bMartes\": true,\n  \"bMiercoles\": true,\n  \"bJueves\": true,\n  \"bViernes\": true,\n  \"bSabado\": false,\n  \"bDomingo\": false,\n  \"fhFechaInicio\": \"2025-01-01T00:00:00Z\",\n  \"fhFechaFinal\": \"2025-12-31T00:00:00Z\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/servicios","host": ["{{baseUrl}}"],"path": ["api","servicios"]}
+          },
+          "description": "Esperado: 201 si bandera habilitada; 405 si deshabilitada"
+        },
+        {
+          "name": "POST /api/servicios inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Servicio Invalido\",\n  \"fhFechaInicio\": \"no-fecha\",\n  \"fhFechaFinal\": \"tambien-no-fecha\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/servicios","host": ["{{baseUrl}}"],"path": ["api","servicios"]}
+          },
+          "description": "Fechas inválidas. Esperado: 400"
+        },
+        {"name": "DELETE /api/servicios/{id} (405/204)","request": {"method": "DELETE","url": {"raw": "{{baseUrl}}/api/servicios/1","host": ["{{baseUrl}}"],"path": ["api","servicios","1"]}},"description": "Esperado: 405 si bandera deshabilitada; 204 si habilitada y existe"}
+      ]
+    },
+    {
+      "name": "Viajes",
+      "description": "Endpoints de viajes",
+      "item": [
+        {"name": "GET /api/viajes (405)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/viajes","host": ["{{baseUrl}}"],"path": ["api","viajes"]}},"description": "Colección deshabilitada. Esperado: 405"},
+        {"name": "GET /api/viajes/{id} (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/viajes/1","host": ["{{baseUrl}}"],"path": ["api","viajes","1"]}}},
+        {"name": "GET /api/viajes/{id}/tiempos (200)","request": {"method": "GET","url": {"raw": "{{baseUrl}}/api/viajes/1/tiempos","host": ["{{baseUrl}}"],"path": ["api","viajes","1","tiempos"]}}},
+        {
+          "name": "PATCH /api/viajes/{id} válido (200)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"tNombre\": \"Viaje Matutino\",\n  \"eCodServicio\": 3\n}"},
+            "url": {"raw": "{{baseUrl}}/api/viajes/1","host": ["{{baseUrl}}"],"path": ["api","viajes","1"]}
+          },
+          "description": "Actualiza nombre y servicio. Esperado: 200"
+        },
+        {
+          "name": "PATCH /api/viajes/{id} inválido (400)",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"eCodServicio\": \"dos\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/viajes/1","host": ["{{baseUrl}}"],"path": ["api","viajes","1"]}
+          },
+          "description": "Tipo inválido (servicio string). Esperado: 400"
+        },
+        {
+          "name": "POST /api/viajes válido (201/405)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"eCodRuta\": 1,\n  \"eCodServicio\": 2,\n  \"tNombre\": \"Viaje Vespertino\",\n  \"tSentido\": \"I\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/viajes","host": ["{{baseUrl}}"],"path": ["api","viajes"]}
+          },
+          "description": "Esperado: 201 si bandera habilitada; 405 si deshabilitada"
+        },
+        {
+          "name": "POST /api/viajes inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type","value": "application/json"}],
+            "body": {"mode": "raw","raw": "{\n  \"eCodRuta\": \"uno\",\n  \"eCodServicio\": \"dos\"\n}"},
+            "url": {"raw": "{{baseUrl}}/api/viajes","host": ["{{baseUrl}}"],"path": ["api","viajes"]}
+          },
+          "description": "Tipos inválidos (ruta/servicio string). Esperado: 400"
+        },
+        {"name": "DELETE /api/viajes/{id} (405/204)","request": {"method": "DELETE","url": {"raw": "{{baseUrl}}/api/viajes/1","host": ["{{baseUrl}}"],"path": ["api","viajes","1"]}},"description": "Esperado: 405 si bandera deshabilitada; 204 si habilitada y existe"}
+      ]
+    }
+  ],
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:5299"}
+  ]
+}
+
