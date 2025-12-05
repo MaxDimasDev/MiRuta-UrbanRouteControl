@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using UrbanRouteApi.Models;
 using UrbanRouteApi;
+using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Http;
 
 namespace UrbanRouteApi.Controllers;
 
@@ -18,6 +20,8 @@ public sealed class RutasController : ControllerBase
     }
 
     [HttpGet]
+    [SwaggerOperation(Summary = "Lista todas las rutas activas", Tags = new[] { "Rutas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<RutaDto>>> Get()
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -31,6 +35,9 @@ public sealed class RutasController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [SwaggerOperation(Summary = "Obtiene una ruta por su ID", Tags = new[] { "Rutas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RutaDto>> GetById(int id)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -44,6 +51,8 @@ public sealed class RutasController : ControllerBase
     }
 
     [HttpGet("{id}/paradas")]
+    [SwaggerOperation(Summary = "Lista paradas asociadas a una ruta", Tags = new[] { "Rutas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<RutaParadaDto>>> GetParadasPorRuta(int id)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -58,6 +67,8 @@ public sealed class RutasController : ControllerBase
     }
 
     [HttpGet("{id}/viajes")]
+    [SwaggerOperation(Summary = "Lista viajes asociados a una ruta", Tags = new[] { "Rutas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<RutaViajeDto>>> GetViajesPorRuta(int id)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -71,6 +82,9 @@ public sealed class RutasController : ControllerBase
     }
 
     [HttpGet("{id}/forma")]
+    [SwaggerOperation(Summary = "Obtiene la forma (polyline) de una ruta", Tags = new[] { "Rutas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RutaFormaDto>> GetFormaPorRuta(int id)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -85,6 +99,9 @@ public sealed class RutasController : ControllerBase
     }
 
     [HttpPost]
+    [SwaggerOperation(Summary = "Crea una nueva ruta", Tags = new[] { "Rutas" })]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
     public async Task<ActionResult<RutaDto>> Create([FromBody] CreateRutaRequest req)
     {
         if (!FeatureFlags.AllowCreationAndDeletion)
@@ -102,6 +119,9 @@ public sealed class RutasController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [SwaggerOperation(Summary = "Actualiza una ruta existente", Tags = new[] { "Rutas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RutaDto>> Update(int id, [FromBody] UpdateRutaRequest req)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -122,6 +142,10 @@ public sealed class RutasController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Elimina lógicamente una ruta", Tags = new[] { "Rutas" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
     public async Task<IActionResult> Delete(int id)
     {
         if (!FeatureFlags.AllowCreationAndDeletion)

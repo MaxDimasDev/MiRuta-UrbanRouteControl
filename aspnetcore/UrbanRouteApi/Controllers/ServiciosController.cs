@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using UrbanRouteApi.Models;
 using UrbanRouteApi;
+using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Http;
 
 namespace UrbanRouteApi.Controllers;
 
@@ -18,6 +20,8 @@ public sealed class ServiciosController : ControllerBase
     }
 
     [HttpGet]
+    [SwaggerOperation(Summary = "Lista todos los servicios activos", Tags = new[] { "Servicios" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ServicioDto>>> Get()
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -33,6 +37,9 @@ public sealed class ServiciosController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [SwaggerOperation(Summary = "Obtiene un servicio por su ID", Tags = new[] { "Servicios" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ServicioDto>> GetById(int id)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -48,6 +55,9 @@ public sealed class ServiciosController : ControllerBase
     }
 
     [HttpPost]
+    [SwaggerOperation(Summary = "Crea un nuevo servicio", Tags = new[] { "Servicios" })]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
     public async Task<ActionResult<ServicioDto>> Create([FromBody] CreateServicioRequest req)
     {
         if (!FeatureFlags.AllowCreationAndDeletion)
@@ -70,6 +80,9 @@ public sealed class ServiciosController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [SwaggerOperation(Summary = "Actualiza un servicio existente", Tags = new[] { "Servicios" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ServicioDto>> Update(int id, [FromBody] UpdateServicioRequest req)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -108,6 +121,10 @@ public sealed class ServiciosController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Elimina lógicamente un servicio", Tags = new[] { "Servicios" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
     public async Task<IActionResult> Delete(int id)
     {
         if (!FeatureFlags.AllowCreationAndDeletion)
