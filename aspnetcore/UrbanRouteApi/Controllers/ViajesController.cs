@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using UrbanRouteApi.Models;
 using UrbanRouteApi;
+using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Http;
 
 namespace UrbanRouteApi.Controllers;
 
@@ -18,6 +20,9 @@ public sealed class ViajesController : ControllerBase
     }
 
     [HttpPost]
+    [SwaggerOperation(Summary = "Crea un nuevo viaje", Tags = new[] { "Viajes" })]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
     public async Task<ActionResult<RutaViajeDto>> Create([FromBody] CreateViajeRequest req)
     {
         if (!FeatureFlags.AllowCreationAndDeletion)
@@ -34,6 +39,9 @@ public sealed class ViajesController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [SwaggerOperation(Summary = "Actualiza un viaje existente", Tags = new[] { "Viajes" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RutaViajeDto>> Update(int id, [FromBody] UpdateViajeRequest req)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -52,6 +60,10 @@ public sealed class ViajesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Elimina lógicamente un viaje", Tags = new[] { "Viajes" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
     public async Task<IActionResult> Delete(int id)
     {
         if (!FeatureFlags.AllowCreationAndDeletion)
@@ -64,6 +76,9 @@ public sealed class ViajesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [SwaggerOperation(Summary = "Obtiene un viaje por su ID", Tags = new[] { "Viajes" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<RutaViajeDto>> GetById(int id)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -77,6 +92,8 @@ public sealed class ViajesController : ControllerBase
     }
 
     [HttpGet("{id}/tiempos")]
+    [SwaggerOperation(Summary = "Lista tiempos y paradas del viaje", Tags = new[] { "Viajes" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ViajeTiempoDto>>> GetTiemposPorViaje(int id)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();

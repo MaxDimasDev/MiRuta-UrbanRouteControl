@@ -4,7 +4,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "UrbanRoute API",
+        Version = "v1",
+        Description = "API para rutas, paradas, servicios y viajes de transporte urbano"
+    });
+    c.OperationFilter<UrbanRouteApi.Swagger.ExamplesOperationFilter>();
+});
 
 // MySQL connection factory (Dapper)
 builder.Services.AddSingleton<IDbConnectionFactory>(sp =>
@@ -17,11 +27,12 @@ builder.Services.AddSingleton<IDbConnectionFactory>(sp =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Swagger habilitado en todos los entornos para facilitar pruebas
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "UrbanRoute API v1");
+});
 
 app.UseHttpsRedirection();
 

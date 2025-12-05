@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using UrbanRouteApi.Models;
 using UrbanRouteApi;
+using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Http;
 
 namespace UrbanRouteApi.Controllers;
 
@@ -18,6 +20,8 @@ public sealed class ParadasController : ControllerBase
     }
 
     [HttpGet]
+    [SwaggerOperation(Summary = "Lista todas las paradas activas", Tags = new[] { "Paradas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ParadaDto>>> Get()
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -31,6 +35,9 @@ public sealed class ParadasController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [SwaggerOperation(Summary = "Obtiene una parada por su ID", Tags = new[] { "Paradas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ParadaDto>> GetById(int id)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -44,6 +51,9 @@ public sealed class ParadasController : ControllerBase
     }
 
     [HttpPost]
+    [SwaggerOperation(Summary = "Crea una nueva parada", Tags = new[] { "Paradas" })]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
     public async Task<ActionResult<ParadaDto>> Create([FromBody] CreateParadaRequest req)
     {
         if (!FeatureFlags.AllowCreationAndDeletion)
@@ -59,6 +69,9 @@ public sealed class ParadasController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [SwaggerOperation(Summary = "Actualiza una parada existente", Tags = new[] { "Paradas" })]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ParadaDto>> Update(int id, [FromBody] UpdateParadaRequest req)
     {
         using IDbConnection conn = _dbFactory.CreateConnection();
@@ -78,6 +91,10 @@ public sealed class ParadasController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Elimina lógicamente una parada", Tags = new[] { "Paradas" })]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status405MethodNotAllowed)]
     public async Task<IActionResult> Delete(int id)
     {
         if (!FeatureFlags.AllowCreationAndDeletion)

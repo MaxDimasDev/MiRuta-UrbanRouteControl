@@ -43,3 +43,42 @@ Para una guía rápida, revisa `docs/GETTING_STARTED.md`.
 
 ## Licencia
 Proyecto académico; revisar condiciones internas de uso. No se incluye licencia open source por defecto.
+
+---
+
+## UrbanRouteApi (ASP.NET Core)
+
+API REST en .NET 8 para gestionar rutas, paradas, servicios y viajes, utilizada durante la migración del módulo MiRuta.
+
+### Descripción breve
+- Exposición de endpoints `Rutas`, `Paradas`, `Servicios` y `Viajes` sobre MySQL.
+- Documentación integrada con Swagger/OpenAPI, con summaries, tags y ejemplos básicos.
+- Colección de Postman y ambiente listos para pruebas locales.
+
+### Requisitos
+- `SDK .NET 8` o superior.
+- Motor de base de datos `MySQL` (probado con MySQL 8 / MariaDB).
+- Cadena de conexión configurada en `aspnetcore/UrbanRouteApi/appsettings.json` bajo `ConnectionStrings:Default`.
+
+### Pasos para levantar la API en local
+1. Abrir una terminal en el proyecto raíz.
+2. Ir al directorio de la API: `cd aspnetcore/UrbanRouteApi`
+3. Restaurar paquetes (opcional): `dotnet restore`
+4. Ejecutar la API: `dotnet run`
+5. Base URL: `http://localhost:5299`
+6. Swagger UI: `http://localhost:5299/swagger`
+
+### Endpoints principales
+- `GET /api/rutas`, `GET /api/rutas/{id}`, `GET /api/rutas/{id}/paradas`, `GET /api/rutas/{id}/viajes`, `GET /api/rutas/{id}/forma`
+- `GET /api/paradas`, `GET /api/paradas/{id}`
+- `GET /api/servicios`, `GET /api/servicios/{id}`
+- `GET /api/viajes/{id}`, `GET /api/viajes/{id}/tiempos`
+- `POST/PATCH/DELETE` en `rutas`, `paradas`, `servicios`, `viajes` (crear/eliminar puede estar deshabilitado por flags de migración).
+
+### Postman
+- Colección: `aspnetcore/UrbanRouteApi/UrbanRouteApi.postman_collection.json`
+- Ambiente: `aspnetcore/UrbanRouteApi/UrbanRouteApi.postman_environment.json` (variable `baseUrl` = `http://localhost:5299`)
+
+### Notas
+- Swagger está habilitado en todos los entornos para facilitar pruebas.
+- Si la API no abre conexión, revisar `ConnectionStrings:Default` y que MySQL esté disponible.
