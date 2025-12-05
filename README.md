@@ -82,3 +82,9 @@ API REST en .NET 8 para gestionar rutas, paradas, servicios y viajes, utilizada 
 ### Notas
 - Swagger está habilitado en todos los entornos para facilitar pruebas.
 - Si la API no abre conexión, revisar `ConnectionStrings:Default` y que MySQL esté disponible.
+
+### Feature flag y estados esperados
+- Para permitir operaciones de **creación** y **eliminación** (`POST`/`DELETE`) establece la variable de entorno: `URBANROUTE_ENABLE_CREATION_DELETION=true`.
+- En PowerShell: ``$env:URBANROUTE_ENABLE_CREATION_DELETION = "true"; dotnet run``.
+- Las pruebas automáticas y el archivo `endpoints_pruebas.txt` consideran como válidos solo **200**, **201** o **202**.
+- Se retiró el middleware que forzaba 200 (`ForceOkFromFileMiddleware`) para trabajar con respuestas reales.

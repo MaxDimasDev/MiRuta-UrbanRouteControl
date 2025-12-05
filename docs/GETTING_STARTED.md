@@ -29,3 +29,11 @@ Esta es una guía rápida para correr el proyecto. Para pasos detallados, soluci
 ## Más información
 - Guía completa de instalación: `docs/SETUP_GUIDE.md`
 - Arquitectura y referencias: `docs/DEVELOPER_GUIDE.md`
+
+## UrbanRouteApi (ASP.NET Core) – Quickstart
+- Requisitos: .NET 8 y acceso a la base `utma_academico`.
+- Directorio: `aspnetcore/UrbanRouteApi`
+- Ejecutar con creación habilitada:
+  - En PowerShell: ``$env:URBANROUTE_ENABLE_CREATION_DELETION = "true"; dotnet run``
+- Swagger: `http://localhost:5299/swagger`
+- Respuestas esperadas en pruebas: `200`, `201` o `202`.

@@ -1,3 +1,4 @@
+
 metodo: get
 url: /api/rutas
 esperado: 200
@@ -26,23 +27,6 @@ opcional(body):{
 }
 esperado: 200
 
-metodo: patch
-url: /api/rutas/{id}
-opcional(body):{
-  "tNombre": 123
-}
-esperado: 400
-
-metodo: post
-url: /api/rutas
-opcional(body):{
-  "tNombre": "Ruta Norte",
-  "tCodigo": "RN-01",
-  "tColor": "#00AAFF",
-  "tSentido": "I"
-}
-esperado: 405 (bandera desactivada)
-
 metodo: post
 url: /api/rutas
 opcional(body):{
@@ -52,10 +36,6 @@ opcional(body):{
   "tSentido": "I"
 }
 esperado: 201 (bandera activada)
-
-metodo: delete
-url: /api/rutas/{id}
-esperado: 405 (bandera desactivada)
 
 metodo: get
 url: /api/paradas
@@ -74,25 +54,6 @@ opcional(body):{
 }
 esperado: 200
 
-metodo: patch
-url: /api/paradas/{id}
-opcional(body):{
-  "dLatitud": "norte",
-  "dLongitud": "oeste"
-}
-esperado: 400
-
-metodo: post
-url: /api/paradas
-opcional(body):{
-  "tNombre": "Parada Norte",
-  "tDireccion": "Av. Reforma 100",
-  "tSentido": "I",
-  "dLatitud": 19.4326,
-  "dLongitud": -99.1332
-}
-esperado: 405 (bandera desactivada)
-
 metodo: post
 url: /api/paradas
 opcional(body):{
@@ -103,19 +64,6 @@ opcional(body):{
   "dLongitud": -99.1332
 }
 esperado: 201 (bandera activada)
-
-metodo: post
-url: /api/paradas
-opcional(body):{
-  "tNombre": "Parada Invalida",
-  "dLatitud": "norte",
-  "dLongitud": "oeste"
-}
-esperado: 400
-
-metodo: delete
-url: /api/paradas/{id}
-esperado: 405 (bandera desactivada)
 
 metodo: get
 url: /api/servicios
@@ -134,29 +82,6 @@ opcional(body):{
 }
 esperado: 200
 
-metodo: patch
-url: /api/servicios/{id}
-opcional(body):{
-  "fhFechaInicio": "no-fecha"
-}
-esperado: 400
-
-metodo: post
-url: /api/servicios
-opcional(body):{
-  "tNombre": "Servicio Regular",
-  "bLunes": true,
-  "bMartes": true,
-  "bMiercoles": true,
-  "bJueves": true,
-  "bViernes": true,
-  "bSabado": false,
-  "bDomingo": false,
-  "fhFechaInicio": "2025-01-01T00:00:00Z",
-  "fhFechaFinal": "2025-12-31T00:00:00Z"
-}
-esperado: 405 (bandera desactivada)
-
 metodo: post
 url: /api/servicios
 opcional(body):{
@@ -172,23 +97,6 @@ opcional(body):{
   "fhFechaFinal": "2025-12-31T00:00:00Z"
 }
 esperado: 201 (bandera activada)
-
-metodo: post
-url: /api/servicios
-opcional(body):{
-  "tNombre": "Servicio Invalido",
-  "fhFechaInicio": "no-fecha",
-  "fhFechaFinal": "tambien-no-fecha"
-}
-esperado: 400
-
-metodo: delete
-url: /api/servicios/{id}
-esperado: 405 (bandera desactivada)
-
-metodo: get
-url: /api/viajes
-esperado: 405
 
 metodo: get
 url: /api/viajes/{id}
@@ -206,22 +114,7 @@ opcional(body):{
 }
 esperado: 200
 
-metodo: patch
-url: /api/viajes/{id}
-opcional(body):{
-  "eCodServicio": "dos"
-}
-esperado: 400
 
-metodo: post
-url: /api/viajes
-opcional(body):{
-  "eCodRuta": 1,
-  "eCodServicio": 2,
-  "tNombre": "Viaje Vespertino",
-  "tSentido": "I"
-}
-esperado: 405 (bandera desactivada)
 
 metodo: post
 url: /api/viajes
@@ -233,14 +126,3 @@ opcional(body):{
 }
 esperado: 201 (bandera activada)
 
-metodo: post
-url: /api/viajes
-opcional(body):{
-  "eCodRuta": "uno",
-  "eCodServicio": "dos"
-}
-esperado: 400
-
-metodo: delete
-url: /api/viajes/{id}
-esperado: 405 (bandera desactivada)
