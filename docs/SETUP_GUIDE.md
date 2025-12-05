@@ -78,3 +78,12 @@ Esta guía te lleva paso a paso desde clonar el repositorio hasta tener la aplic
 - Guía rápida: `docs/GETTING_STARTED.md`
 - Arquitectura y referencias: `docs/DEVELOPER_GUIDE.md`
 - Explicación de BD: `docs/system/BD_Explicacion.txt`
+
+## Apéndice: UrbanRouteApi (ASP.NET Core)
+- Levantar API para pruebas de transporte:
+  1. Abrir terminal en `aspnetcore/UrbanRouteApi`.
+  2. Opcional: `dotnet restore`.
+  3. Ejecutar con bandera de creación habilitada: ``$env:URBANROUTE_ENABLE_CREATION_DELETION = "true"; dotnet run``.
+  4. Swagger UI: `http://localhost:5299/swagger`.
+- Estados esperados en pruebas automatizadas: `200`/`201`/`202`.
+- Nota: Se retiró el middleware que forzaba respuestas 200 para reflejar comportamiento real.

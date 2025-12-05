@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "UrbanRoute API",
         Version = "v1",
-        Description = "API para rutas, paradas, servicios y viajes de transporte urbano"
+        Description = "API para rutas, paradas, servicios y viajes de transporte urbano.\n\nEstados esperados en pruebas: 200/201/202. Para permitir operaciones de creación/eliminación, establece la variable de entorno URBANROUTE_ENABLE_CREATION_DELETION=true. El middleware que forzaba 200 (ForceOkFromFileMiddleware) ha sido deshabilitado/retirado para reflejar respuestas reales."
     });
     c.OperationFilter<UrbanRouteApi.Swagger.ExamplesOperationFilter>();
 });
@@ -33,6 +33,8 @@ app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "UrbanRoute API v1");
 });
+
+
 
 app.UseHttpsRedirection();
 
